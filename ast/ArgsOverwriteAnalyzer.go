@@ -11,11 +11,7 @@ import (
 	"os"
 )
 
-func output(ident *ast.Ident, pos token.Position) {
-	fmt.Printf("\"%s\" overwrites func parameter in pos: %s:%d:%d\n", ident.Name, pos.Filename, pos.Line, pos.Column)
-}
-
-func main() () {
+func main() {
 	fset := token.NewFileSet()
 	path := os.Args[1]
 	pkgs, err := parser.ParseDir(fset, path, nil, 0)
@@ -85,4 +81,8 @@ func analyzePackage(p *ast.Package, fset *token.FileSet) {
 		ast.Inspect(f, visitor)
 	}
 
+}
+
+func output(ident *ast.Ident, pos token.Position) {
+	fmt.Printf("\"%s\" overwrites func parameter in pos: %s:%d:%d\n", ident.Name, pos.Filename, pos.Line, pos.Column)
 }
