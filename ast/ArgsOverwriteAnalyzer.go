@@ -20,17 +20,20 @@ func main() {
 	}
 
 	for _, pkg := range pkgs {
-		analyzePackage(pkg, fset)
+		outputs := analyzePackage(pkg, fset)
+		for _, message := range outputs {
+			fmt.Println(message)
+		}
 	}
 }
 
-func analyzePackage(p *ast.Package, fset *token.FileSet) {
+func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
 	conf := types.Config{Importer: importer.Default()}
 	info := &types.Info{
 		Defs: make(map[*ast.Ident]types.Object),
 		Uses: make(map[*ast.Ident]types.Object),
 	}
-
+	outputs := make([]string, 0)
 	visitor := func(node ast.Node) bool {
 		var typ *ast.FuncType
 		var body *ast.BlockStmt
@@ -58,13 +61,13 @@ func analyzePackage(p *ast.Package, fset *token.FileSet) {
 						for _, lhs := range stmt.Lhs {
 							ident, ok := lhs.(*ast.Ident)
 							if ok && info.ObjectOf(ident) == obj {
-								output(ident, fset.Position(ident.Pos()))
+								outputs = append(outputs, output(ident, fset.Position(ident.Pos())))
 							}
 						}
 					case *ast.IncDecStmt:
 						ident, ok := stmt.X.(*ast.Ident)
 						if ok && info.ObjectOf(ident) == obj {
-							output(ident, fset.Position(ident.Pos()))
+							outputs = append(outputs, output(ident, fset.Position(ident.Pos())))
 						}
 					}
 					return true
@@ -80,9 +83,9 @@ func analyzePackage(p *ast.Package, fset *token.FileSet) {
 		}
 		ast.Inspect(f, visitor)
 	}
-
+	return outputs
 }
 
-func output(ident *ast.Ident, pos token.Position) {
-	fmt.Printf("\"%s\" overwrites func parameter in pos: %s:%d:%d\n", ident.Name, pos.Filename, pos.Line, pos.Column)
+func output(ident *ast.Ident, pos token.Position) string {
+	return fmt.Sprintf("\"%s\" overwrites func parameter in pos: %s:%d:%d", ident.Name, pos.Filename, pos.Line, pos.Column)
 }
