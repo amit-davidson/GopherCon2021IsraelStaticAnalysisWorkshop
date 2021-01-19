@@ -12,9 +12,8 @@ import (
 )
 
 func main() {
-	fset := token.NewFileSet()
 	path := os.Args[1]
-	pkgs, err := parser.ParseDir(fset, path, nil, 0)
+	fset, pkgs, err := loadProgram(path)
 	if err != nil {
 		log.Fatalf("Failed to parse dir %s: %s", path, err)
 	}
@@ -25,6 +24,15 @@ func main() {
 			fmt.Println(message)
 		}
 	}
+}
+
+func loadProgram(path string) (*token.FileSet, map[string]*ast.Package, error) {
+	fset := token.NewFileSet()
+	pkgs, err := parser.ParseDir(fset, path, nil, 0)
+	if err != nil {
+		return nil, nil, err
+	}
+	return fset, pkgs, nil
 }
 
 func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
