@@ -181,4 +181,3 @@ Then, we call the `parser.ParseFile` function, providing it our `fileSet` so it 
 Finally, we call `ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the `Hello World` string literal. `true` is returned each iteration to keep traversing the tree until the desired node is found. Then, we return `false` to indicate we're done searching. 
 
 1.5 Writing our first analyzer!
-	
