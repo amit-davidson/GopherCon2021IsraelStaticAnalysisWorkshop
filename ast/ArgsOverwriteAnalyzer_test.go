@@ -17,7 +17,7 @@ func Test_analyzePackage(t *testing.T) {
 		name   string
 		result []string
 	}{
-		{name: "SimpleOverwriting", result: []string{"\"body\" overwrites func parameter in pos"}},
+		{name: "SimpleRecursionFlag", result: []string{"\"body\" overwrites func parameter in pos"}},
 		{name: "AnonymousFunction", result: []string{"\"a\" overwrites func parameter in pos"}},
 		{name: "OverwritingParamFromOuterScope", result: []string{"\"a\" overwrites func parameter in pos"}},
 		{name: "AssigningParamToAVariableFirst", result: []string{}},
