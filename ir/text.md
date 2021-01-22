@@ -126,3 +126,4 @@ As you can see some instructions that we don't expect to see at the soruce code 
 When applying this logic to static analysis we'll see that SSA will be used for more complex analysis where we need to determine the flow of the data, where as AST, will be used for simpler, more structure related, analyses.
 
 2.6 Writing our analyzer!
+https://github.com/ipfs/go-ipfs/issues/2043
