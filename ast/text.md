@@ -1,5 +1,5 @@
  - AST
-	 1.1 Go packages (Note: Improve title name)
+	 1.1 Go packages overview
 	 There are 6 relevant packages:
 	 - ast - Package ast declares the types used to represent syntax trees for Go packages.
 	 - token - Package token defines constants representing the lexical tokens of Go 
@@ -10,8 +10,7 @@
 
 The `scanner` package is fed with `[]byte` representing the source code. It's output is a list of `tokens` defined by the `token` package and they are used by the `parser` package to create the `ast` tree. After the tree is constructed, type checking algorithms defined by `types` run over the tree, validates it correctness and evalutes `constants` accordingly. 
 
-(Note: Add an image of the complication process and where the packages lay)
-
+![Go packages overview](https://i.imgur.com/xo2stvz.png)
 1.2 What is AST?
 		 An abstract syntax tree (AST) is a way of representing the syntax of a 		programming language as a hierarchical tree-like structure. Let's take a look at the following program for explanation. 
 	
@@ -116,7 +115,8 @@ We can use this [AST visualizer](http://goast.yuroyoro.net/) to view it's AST.
 
 Let's focus on the JSON under `*ast.File` represetnting a Go source file. The file is the root node and it contains all the top-level declarations in the file - the import and the main function declarations. Under the `main` body we have a `blockStmt` containing a list of the function statements. As you can see, it resembles a tree-like structure.
 
-The syntax is "abstract" in the sense that it does not represent every detail appearing in the real syntax, but rather just the structural or content-related details. For instance, grouping parentheses are implicit in the tree structure, so these are not represented as separate nodes. (Note: Add an image of a tree)
+The syntax is "abstract" in the sense that it does not represent every detail appearing in the real syntax, but rather just the structural or content-related details. For instance, grouping parentheses are implicit in the tree structure, so these are not represented as separate nodes.
+![Go packages overview](https://i.imgur.com/oGuNoQZ.png)
 
 1.3 AST package members
 The `ast` package contains the types used to represent syntax trees in Go.
@@ -129,7 +129,7 @@ Others: `Package`, `File`, `Scope`, `Object`
 As you can see, the `ast` contains only the "abstract" parts and ignores parentheses, colon, etc...
 
 1.4 Loading a program using the parser
-	As explained we need to parse the file first. (Add path to file in example)
+	As explained we need to parse the file first.
 	
   ```
 package main  
@@ -173,7 +173,7 @@ We first create a `fileSet` which represents a set of source files. `FileSet` ha
 
 Then, we call the `parser.ParseFile` function, providing it our `fileSet` so it can populate it, an empty `path`, a string as the source so the parser will use it instead of loading from a file, and a build mode - `0`	. For this example we used `0`  to load the program fully, but any [other mode](https://golang.org/pkg/go/parser/#Mode) can be used.
 
-(Note: Add image of FileSet)
+![FileSet](https://i.imgur.com/wrO1T0V.png)
 
 > Tip: Instead of iterating file by file, you can load an entire directory using `parser.ParseDir`
 
@@ -181,3 +181,4 @@ Then, we call the `parser.ParseFile` function, providing it our `fileSet` so it 
 Finally, we call `ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the `Hello World` string literal. `true` is returned each iteration to keep traversing the tree until the desired node is found. Then, we return `false` to indicate we're done searching. 
 
 1.5 Writing our first analyzer!
+	
