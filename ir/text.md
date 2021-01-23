@@ -24,21 +24,25 @@ Humans can see that the first assignment is not necessary, and that the value of
 
 2.3 tools/go/SSA package members
 Program - A Program is a partial or complete Go program converted to SSA form.
+![Program](https://i.imgur.com/FHbYxeU.png =450x400)
 
 Package - A Package is a single analyzed Go package containing Members for all package-level functions, variables, constants and types it declares.
+![Package](https://i.imgur.com/eLzMEHR.png =450x400)
 
 Function - Function represents the parameters, results, and code of a function or method.
+![Function](https://i.imgur.com/FqN1GdN.png =600x400)
 
 Basic Block - BasicBlock represents an SSA basic block. A set of instructions that are executed and can't jump somewhere else. Basic blocks are connected using conditions and goto statements. 
-
+![Function](https://i.imgur.com/XGrpRkH.png =600x400)
 Control Flow Graph (CFG) - In a control-flow graph each node in the graph represents a basic block. Together, they all paths that might be traversed through a program during its execution.
+![Function](https://i.imgur.com/jpmXl4P.png =700x200)
 
 Instruction - a statement that consumes values and performs computation. For example, `Call`, `Return`, `TypeAssert`, etc
-
+![Function](https://i.imgur.com/VJ5mxF3.png =600x400)
 Value - an expression that yields a value. Function calls for example are both `Instruction` and `Value` since they both consume values but also yield a value.
 
-Other functions members - Include language keywords such as `Defer`, `If` but also lower level primivites like `MakeChan` and `Alloc` 
-
+![Function](https://i.imgur.com/UlKSNVu.png =600x400)
+[Other functions types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primivites like `MakeChan` and `Alloc`. 
 
 2.4 Viewing SSA
 We can use this  [SSA visualizer](http://golang-ssaview.herokuapp.com/)  to view the SSA form of programs.
