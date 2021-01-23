@@ -1,10 +1,10 @@
-2. IR
-	2.1 What is IR?
-	An **intermediate representation** (**IR**) is the code used internally by a compiler to represent source code. An IR is designed to be conducive for further processing, such as optimization and translation. A "good" IR must be _accurate_ – capable of representing the source code without loss of information  – and _independent_ of any particular source or target language.
+## 2. IR
+### 2.1 What is IR?
+An **intermediate representation** (**IR**) is the code used internally by a compiler to represent source code. An IR is designed to be conducive for further processing, such as optimization and translation. A "good" IR must be _accurate_ – capable of representing the source code without loss of information  – and _independent_ of any particular source or target language.
 	
-	2.2 What is SSA?
-		SSA stands for static single assignment. It's a property of an IR **that requires each variable be assigned exactly once**, and every variable be defined before it is used. 
-		The primary usefulness of SSA comes from how it simplifies the properties of variables and improves compilers optimizations.
+### 2.2 What is SSA?
+SSA stands for static single assignment. It's a property of an IR **that requires each variable be assigned exactly once**, and every variable be defined before it is used. 
+The primary usefulness of SSA comes from how it simplifies the properties of variables and improves compilers optimizations.
 
 For example, consider this piece of code:
 ```
@@ -22,29 +22,40 @@ x1 := y2
 Humans can see that the first assignment is not necessary, and that the value of `y` being used in the third line comes from the second assignment of `y`. In SSA form, both of these are immediate
 
 
-2.3 tools/go/SSA package members
+### 2.3 SSA package members
+The package tools/go/ssa defines representation of the elements of Go programs using SSA.
+
 Program - A Program is a partial or complete Go program converted to SSA form.
-![Program](https://i.imgur.com/FHbYxeU.png =450x400)
+
+<img src="https://i.imgur.com/FHbYxeU.png" width="50%" height="50%" />
 
 Package - A Package is a single analyzed Go package containing Members for all package-level functions, variables, constants and types it declares.
-![Package](https://i.imgur.com/eLzMEHR.png =450x400)
+
+<img src="https://i.imgur.com/eLzMEHR.png" width="50%" height="50%" />
 
 Function - Function represents the parameters, results, and code of a function or method.
-![Function](https://i.imgur.com/FqN1GdN.png =600x400)
 
-Basic Block - BasicBlock represents an SSA basic block. A set of instructions that are executed and can't jump somewhere else. Basic blocks are connected using conditions and goto statements. 
-![Function](https://i.imgur.com/XGrpRkH.png =600x400)
+<img src="https://i.imgur.com/FqN1GdN.png" width="50%" height="50%" />
+
+Basic Block - BasicBlock represents an SSA basic block. A set of instructions that are executed and can't jump somewhere else. Basic blocks are connected using conditions and goto statements.
+ 
+<img src="https://i.imgur.com/XGrpRkH.png" width="50%" height="50%" />
+
 Control Flow Graph (CFG) - In a control-flow graph each node in the graph represents a basic block. Together, they all paths that might be traversed through a program during its execution.
-![Function](https://i.imgur.com/jpmXl4P.png =700x200)
+
+<img src="https://i.imgur.com/jpmXl4P.png" width="50%" height="50%" />
 
 Instruction - a statement that consumes values and performs computation. For example, `Call`, `Return`, `TypeAssert`, etc
-![Function](https://i.imgur.com/VJ5mxF3.png =600x400)
+
+<img src="https://i.imgur.com/VJ5mxF3.png" width="50%" height="50%" />
+
 Value - an expression that yields a value. Function calls for example are both `Instruction` and `Value` since they both consume values but also yield a value.
 
-![Function](https://i.imgur.com/UlKSNVu.png =600x400)
-[Other functions types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primivites like `MakeChan` and `Alloc`. 
+<img src="https://i.imgur.com/UlKSNVu.png" width="50%" height="50%" />
 
-2.4 Viewing SSA
+The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primivites like `MakeChan` and `Alloc`. 
+
+### 2.4 Viewing SSA
 We can use this  [SSA visualizer](http://golang-ssaview.herokuapp.com/)  to view the SSA form of programs.
 
 > You can also use `go.tools/cmd/ssadump` in view SSA in your CLI
@@ -67,7 +78,8 @@ func main() {
 ```
 
 It's SSA representation looks like the following. At the top, we can see the package members, the `main` function, and the implicit `init` function.
-After that we can see the `init` function it's [attributes](https://pkg.go.dev/golang.org/x/tools/go/ssa#Function), and it's CFG. We'll ignore that for now and focus on the `main` function CFG:
+After that we can see the `init` function it's [attributes](https://pkg.go.dev/golang.org/x/tools/go/ssa#Function), and it's CFG. We'll ignore that for now and focus on the `main` function CFG. 
+I have added comments explaining interesting line above them.  
 ```
 package main.go:
   func  init       func()
@@ -124,10 +136,10 @@ func main():
 ```
 As you can see some instructions that we don't expect to see at the soruce code level were inserted by the compiler in the SSA format. Like the example of the if condition, they are a more verbose form of the same instruction.
 
-2.5 SSA vs AST
+### 2.5 SSA vs AST
 	AST, shows us the structure of the code. How different statements in the code relate to each other. SSA on the the hand shows us how the code flows.
 
 When applying this logic to static analysis we'll see that SSA will be used for more complex analysis where we need to determine the flow of the data, where as AST, will be used for simpler, more structure related, analyses.
 
-2.6 Writing our analyzer!
+### 2.6 Writing our analyzer!
 https://github.com/ipfs/go-ipfs/issues/2043

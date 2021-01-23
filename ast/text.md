@@ -1,18 +1,20 @@
- - AST
-	 1.1 Go packages overview
-	 There are 6 relevant packages:
-	 - ast - Package ast declares the types used to represent syntax trees for Go packages.
-	 - token - Package token defines constants representing the lexical tokens of Go 
-	 - scanner - Package scanner implements a scanner for Go source text. It takes a `[]byte` as source which can then be tokenized through repeated calls to the Scan method.
-	 - parser - Package parser implements a parser for Go source files. The output is an abstract syntax tree (AST) representing the Go source
-	 - constant - Package constant implements Values representing untyped Go constants and their corresponding operations.
-	 - types - Package types declares the data types and implements the algorithms for type-checking of Go packages
+ ## AST
+ ### 1.1 Go packages overview
+ There are 6 relevant packages:
+ - ast - Package ast declares the types used to represent syntax trees for Go packages.
+ - token - Package token defines constants representing the lexical tokens of Go 
+ - scanner - Package scanner implements a scanner for Go source text. It takes a `[]byte` as source which can then be tokenized through repeated calls to the Scan method.
+ - parser - Package parser implements a parser for Go source files. The output is an abstract syntax tree (AST) representing the Go source
+ - constant - Package constant implements Values representing untyped Go constants and their corresponding operations.
+ - types - Package types declares the data types and implements the algorithms for type-checking of Go packages
+
 
 The `scanner` package is fed with `[]byte` representing the source code. It's output is a list of `tokens` defined by the `token` package and they are used by the `parser` package to create the `ast` tree. After the tree is constructed, type checking algorithms defined by `types` run over the tree, validates it correctness and evalutes `constants` accordingly. 
 
-![Go packages overview](https://i.imgur.com/xo2stvz.png)
-1.2 What is AST?
-		 An abstract syntax tree (AST) is a way of representing the syntax of a 		programming language as a hierarchical tree-like structure. Let's take a look at the following program for explanation. 
+<img src="https://i.imgur.com/xo2stvz.png"/>
+
+### 1.2 What is AST?
+An abstract syntax tree (AST) is a way of representing the syntax of a 		programming language as a hierarchical tree-like structure. Let's take a look at the following program for explanation. 
 	
   ```
   package main
@@ -116,9 +118,10 @@ We can use this [AST visualizer](http://goast.yuroyoro.net/) to view it's AST.
 Let's focus on the JSON under `*ast.File` represetnting a Go source file. The file is the root node and it contains all the top-level declarations in the file - the import and the main function declarations. Under the `main` body we have a `blockStmt` containing a list of the function statements. As you can see, it resembles a tree-like structure.
 
 The syntax is "abstract" in the sense that it does not represent every detail appearing in the real syntax, but rather just the structural or content-related details. For instance, grouping parentheses are implicit in the tree structure, so these are not represented as separate nodes.
-![Go packages overview](https://i.imgur.com/oGuNoQZ.png)
 
-1.3 AST package members
+<img src="https://i.imgur.com/oGuNoQZ.png" width="35%" height="35%"/>
+
+### 1.3 AST package members
 The `ast` package contains the types used to represent syntax trees in Go.
 We can divide the types into 3 categories: Interfaces, concrete types and others.
 
@@ -128,9 +131,8 @@ Others: `Package`, `File`, `Scope`, `Object`
 
 As you can see, the `ast` contains only the "abstract" parts and ignores parentheses, colon, etc...
 
-1.4 Loading a program using the parser
-	As explained we need to parse the file first.
-	
+### 1.4 Loading a program using the parser
+To load the program, we need to parse it first	
   ```
 package main  
   
@@ -173,12 +175,12 @@ We first create a `fileSet` which represents a set of source files. `FileSet` ha
 
 Then, we call the `parser.ParseFile` function, providing it our `fileSet` so it can populate it, an empty `path`, a string as the source so the parser will use it instead of loading from a file, and a build mode - `0`	. For this example we used `0`  to load the program fully, but any [other mode](https://golang.org/pkg/go/parser/#Mode) can be used.
 
-![FileSet](https://i.imgur.com/wrO1T0V.png)
-
 > Tip: Instead of iterating file by file, you can load an entire directory using `parser.ParseDir`
+
+<img src="https://i.imgur.com/wrO1T0V.png" width="50%" height="50%"/>
 
 
 Finally, we call `ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the `Hello World` string literal. `true` is returned each iteration to keep traversing the tree until the desired node is found. Then, we return `false` to indicate we're done searching. 
 
-1.5 Writing our first analyzer!
+### 1.5 Writing our first analyzer!
 	

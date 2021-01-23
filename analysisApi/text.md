@@ -1,6 +1,6 @@
-1 Analysis API:
-		1.1 tools/go/analysis
-		The package defines an API for modular static analysis tools. In other words, it's a common interface for all static code analyzers.
+## 1 Analysis API:
+### 1.1 tools/go/analysis
+The package defines an API for modular static analysis tools. In other words, it's a common interface for all static code analyzers.
 		
 The primary type in the API is `analysis.Analyzer`.  It describes describes an analysis function: its name, documentation, flags, relationship to other analyzers, and of course, its logic.
 
@@ -47,8 +47,8 @@ type Diagnostic struct {
 }
 ```
 
-1.2 How to use it
-	First let's define the project structure:
+### 1.2 How to use it
+First let's define the project structure:
 <pre>
 |-- README.md
 |-- cmd
@@ -67,7 +67,7 @@ We create a directory where all of our passes reside in named `passes`. Each pas
 
 So far, our code sat under `passes`  where each analyzer had it's own pass folder. Now, weneed a way to run the analyzer and to test it.
 
-1.3 Running our code
+### 1.3 Running our code
 inside `main.go` we'll add the following code. 
 
 ```
@@ -84,9 +84,9 @@ Analyzers are provided in the form of packages that a driver program is expected
 The `singlechecker` package provides the main function for a command that runs one analyzer. By convention, each analyzer should be accompanied by a singlechecker-based command defined in its entirety as: This code calls our analyzer. 
 If we wanted for our command to run mulitple analyzers, we would have to use `tools/go/analysis/multichecker`.
 
-1.4 Testing our code
-	The `analysistest` subpackage provides utilities for testing an Analyzer. Using `analysistest.Run`, it is possible to run an analyzer on a package of testdata files and check that it reported all the expected diagnostics.
- Expectations are expressed using "// want ..." comments in the input code such as the following:
+### 1.4 Testing our code
+The `analysistest` subpackage provides utilities for testing an Analyzer. Using `analysistest.Run`, it is possible to run an analyzer on a package of testdata files and check that it reported all the expected diagnostics.
+Expectations are expressed using "// want ..." comments in the input code such as the following:
 
 ```
 package testdata  
@@ -98,13 +98,13 @@ func main() {
 }
 ```
 
-1.5 Implementing a code analyzer.	
+### 1.5 Implementing a code analyzer using the analysis api.	
 In this section we'll convert our `ArgsOverwrite` analyzer from earlier to the analysis API
 
-1.6 Integrating it as part of our toolchain. 
-		We can run our analysis in 2 ways:
-		1. Run it directly
-		2. Using `go vet` with the following command: 
+### 1.6 Integrating it as part of our toolchain. 
+We can run our analysis in 2 ways:
+1. Run it directly
+2. Using `go vet` with the following command: 
 ```
 go vet -vettool=$(which analyzer name) path/to/files
 ```
