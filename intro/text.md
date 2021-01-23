@@ -42,7 +42,7 @@ Back end - The back end is responsible for the CPU architecture specific optimiz
 1.2.2 Frontend
 	Most commonly today, the frontend is broken into three phases: lexical analysis (also known as lexing or scanning), syntax analysis (also known as scanning or parsing), and semantic analysis.
 
-Notes: Add image of compiler frontend
+![Compiler frontend overview](https://i.imgur.com/Vf7nTrF.png)
 
 Lexing - converts a sequence of characters into a sequence of tokens. A token is a pair consisting of a token name and token value. Common token names include keyword, separator, identifier, literal	and some of their respectively `while`, `{`, `x`, `"music"`.
 
@@ -50,7 +50,7 @@ Parsing - involves parsing the token sequence to identify the of the program. Th
 
 Semantic Analysis - This phase performs checks such as type checking and rejecting incorrect programs. It also constructs the symbol table used to map between identifiers and information relating to their declaration or appearance in the source.
 
-![Compiler frontend](https://upload.wikimedia.org/wikipedia/commons/5/5b/Xxx_Scanner_and_parser_example_for_C.gif)
+![Compiler frontend](https://i.imgur.com/biUHNJq.png)
 
 1.2.3 Middle end
 		As explained, the middle end performs optimzations regardless of the source code language and the target machine. As opposed to the front end phase, the middle end analyses are more complex. By estimating how the code and the data will flow, the compiler does optimizations ranging from the scope of a function to  the entire program (interprocedural). 
