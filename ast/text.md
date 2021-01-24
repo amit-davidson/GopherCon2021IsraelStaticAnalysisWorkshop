@@ -23,7 +23,7 @@ func main() {
 }
 ```
 
-We can use this AST visualizer to view it's AST.
+We can use this [AST visualizer](http://goast.yuroyoro.net/) to view it's AST.
 ```
      0  *ast.File {
      1  .  Package: 1:1
