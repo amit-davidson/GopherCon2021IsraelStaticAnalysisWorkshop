@@ -1,33 +1,29 @@
- ## AST
- ### 1.1 Go packages overview
- There are 6 relevant packages:
- - ast - Package ast declares the types used to represent syntax trees for Go packages.
- - token - Package token defines constants representing the lexical tokens of Go 
- - scanner - Package scanner implements a scanner for Go source text. It takes a `[]byte` as source which can then be tokenized through repeated calls to the Scan method.
- - parser - Package parser implements a parser for Go source files. The output is an abstract syntax tree (AST) representing the Go source
- - constant - Package constant implements Values representing untyped Go constants and their corresponding operations.
- - types - Package types declares the data types and implements the algorithms for type-checking of Go packages
+AST
+1.1 Go packages overview
+There are six relevant packages:
 
+- token - Package token defines constants representing the lexical tokens of Go
+- scanner - Package scanner implements a scanner for Go source text. It takes a []byte as the source, which can then be tokenized through repeated calls to the Scan method.
+- parser - Package parser implements a parser for Go source files. The output is an abstract syntax tree (AST) representing the Go source
+- AST - Package AST declares the types used to represent syntax trees for Go packages.
+- constant - Package constant implements Values representing untyped Go constants and their corresponding operations.
+- types - Package `types` declares the data types and implements the algorithms for type-checking of Go packages
 
-The `scanner` package is fed with `[]byte` representing the source code. It's output is a list of `tokens` defined by the `token` package and they are used by the `parser` package to create the `ast` tree. After the tree is constructed, type checking algorithms defined by `types` run over the tree, validates it correctness and evalutes `constants` accordingly. 
+The `scanner` package is fed with []byte representing the source code. Its output is a list of tokens defined by the token package, and the parser package uses them to create the AST tree. After the tree is constructed, the parser runs type-checking algorithms run over the tree, validates its correctness, and evaluates constants.
 
-<img src="https://i.imgur.com/xo2stvz.png"/>
+1.2 What is AST?
+An abstract syntax tree (AST) is a way of representing the syntax of a programming language as a hierarchical tree-like structure. Let's take a look at the following program for an explanation.
 
-### 1.2 What is AST?
-An abstract syntax tree (AST) is a way of representing the syntax of a 		programming language as a hierarchical tree-like structure. Let's take a look at the following program for explanation. 
-	
-  ```
-  package main
-
+```
+package main
 import "fmt"
 
 func main() {
-    fmt.Println("hello world")
+  fmt.Println("hello world")
 }
-  ```
+```
 
-We can use this [AST visualizer](http://goast.yuroyoro.net/) to view it's AST.
-
+We can use this AST visualizer to view it's AST.
 ```
      0  *ast.File {
      1  .  Package: 1:1
@@ -115,72 +111,70 @@ We can use this [AST visualizer](http://goast.yuroyoro.net/) to view it's AST.
     83  }
 ```
 
-Let's focus on the JSON under `*ast.File` represetnting a Go source file. The file is the root node and it contains all the top-level declarations in the file - the import and the main function declarations. Under the `main` body we have a `blockStmt` containing a list of the function statements. As you can see, it resembles a tree-like structure.
+Let's focus on the JSON under `*ast.File` representing a Go source file. The file is the root node, and it contains all
+the top-level declarations in the file - the import and the main function declarations. Under `mains'` body, we have a
+`blockStmt` containing a list of the function statements. Similar to HTML, the dependency of the nodes create a
+tree-like structure. 
 
-The syntax is "abstract" in the sense that it does not represent every detail appearing in the real syntax, but rather just the structural or content-related details. For instance, grouping parentheses are implicit in the tree structure, so these are not represented as separate nodes.
+The syntax is "abstract" in the sense that it does not represent every detail appearing in the real syntax, but rather
+just the structural or content-related details. For instance, grouping parentheses are implicit in the tree structure,
+so these are not represented as separate nodes.
 
-<img src="https://i.imgur.com/oGuNoQZ.png" width="35%" height="35%"/>
+1.3 AST package members
+The AST package contains the types used to represent syntax trees in Go. We can divide the members into three categories: Interfaces, concrete types, and others.
 
-### 1.3 AST package members
-The `ast` package contains the types used to represent syntax trees in Go.
-We can divide the types into 3 categories: Interfaces, concrete types and others.
+- Interfaces: `Node`, `Decl`, `Spec`, `Stmt`, `Expr`
+- Concrete Types: The full list is [long](https://golang.org/pkg/go/ast/#ArrayType). Those are the nodes of the
+ tree and they contain value such as: `FuncDecl`, `IncDecStmt`, `Ident`, `Comment` and so on.
+- Others: `Package`, `File`, `Scope`, `Object`. They do not fall to a specific category but rather 
 
-Interfaces:	`Node`, `Decl`, `Spec`, `Stmt`, `Expr`
-Concrete Types: I won't go over the full list, but it's possible to see it [here](https://golang.org/pkg/go/ast/#pkg-index). In short, those are the nodes of the tree and it contains value such as: `FuncDecl`. `IncDecStmt`, `Ident`, `Comment` and so on.
-Others: `Package`, `File`, `Scope`, `Object`
+As you can see, the `AST` package contains only the "abstract" parts and ignores parentheses, colon, etc...
 
-As you can see, the `ast` contains only the "abstract" parts and ignores parentheses, colon, etc...
-
-### 1.4 Loading a program using the parser
-To load the program, we need to parse it first	
-  ```
+1.4 Loading a program using the parser
+To load the program, we need to parse it first
+```
 package main  
-  
+
 import (  
-   "fmt"  
- "go/ast"
-  "go/parser"
-   "go/token"
-   )  
-  
+ "fmt"  
+"go/ast"
+"go/parser"
+ "go/token"
+ )  
+
 func main() {  
-  
-  src := `package main  
-  
+
+src := `package main  
+
 import "fmt"  
-  
+
 func main() {  
-	 fmt.Println("hello world")}  
+   fmt.Println("hello world")}  
 `  
-  
-  fset := token.NewFileSet()  
-  f, err := parser.ParseFile(fset, "", src, 0)  
-   if err != nil {  
-      fmt.Println(err)  
-      return  
-  }  
-   visitor := func(node ast.Node) bool {  
-      strLit, ok := (node).(*ast.BasicLit)  
-      if ok && strLit.Value == "\"hello world\"" {  
-         fmt.Println("We found hello world!")
-         return false  
-      }  
-      return true  
-  }  
-   ast.Inspect(f, visitor)  
+
+fset := token.NewFileSet()  
+f, err := parser.ParseFile(fset, "", src, 0)  
+ if err != nil {  
+    fmt.Println(err)  
+    return  
+}  
+ visitor := func(node ast.Node) bool {  
+    strLit, ok := (node).(*ast.BasicLit)  
+    if ok && strLit.Value == "\"hello world\"" {  
+       fmt.Println("We found hello world!")
+       return false  
+    }  
+    return true  
+}  
+ ast.Inspect(f, visitor)  
 }
-  ```
+```
 
-We first create a `fileSet` which represents a set of source files. `FileSet` has the properties `files` and `base`  recording the files and the total size of all the files respectively. Using the `size` property of `token.File` we can easily determine in what file a statement is given it's position.
+We first create a fileSet which represents a set of source files. FileSet has the properties files and base recording the files and the total size of all the files respectively. Using the size property of token.File we can easily determine in what file a statement is given it's position.
+Then, we call the parser.ParseFile function, providing it our fileSet so it can populate it, an empty path, a string as the source so the parser will use it instead of loading from a file, and a build mode - 0 . For this example we used 0 to load the program fully, but any other mode can be used.
+Tip: Instead of iterating file by file, you can load an entire directory using parser.ParseDir
 
-Then, we call the `parser.ParseFile` function, providing it our `fileSet` so it can populate it, an empty `path`, a string as the source so the parser will use it instead of loading from a file, and a build mode - `0`	. For this example we used `0`  to load the program fully, but any [other mode](https://golang.org/pkg/go/parser/#Mode) can be used.
-
-> Tip: Instead of iterating file by file, you can load an entire directory using `parser.ParseDir`
-
-<img src="https://i.imgur.com/wrO1T0V.png" width="50%" height="50%"/>
+Finally, we call ast.Inspect to iterate over all the nodes in depth-first order and print a message when we reach the Hello World string literal. true is returned each iteration to keep traversing the tree until the desired node is found. Then, we return false to indicate we're done searching.
+1.5 Writing our first analyzer!
 
 
-Finally, we call `ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the `Hello World` string literal. `true` is returned each iteration to keep traversing the tree until the desired node is found. Then, we return `false` to indicate we're done searching. 
-
-### 1.5 Writing our first analyzer!
-	
