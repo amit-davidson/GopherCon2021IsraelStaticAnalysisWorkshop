@@ -39,8 +39,8 @@ The front end transforms the input program into an intermediate representation (
 ### 1.2.2 Frontend
 Most commonly today, the frontend is broken into three phases: lexical analysis (also known as lexing or scanning), syntax analysis (also known as scanning or parsing), and semantic analysis.
 
-
-- Lexing - converts a sequence of characters into a sequence of tokens. A token is a pair consisting of a token name and token value. Common token names include keyword, separator, identifier, literal and some of their respectively `while`, `{`, `x`, `"music"`.
+#### Lexing 
+converts a sequence of characters into a sequence of tokens. A token is a pair consisting of a token name and token value. Common token names include keyword, separator, identifier, literal and some of their respectively `while`, `{`, `x`, `"music"`.
 
 | Token name | Sample token values              |
 |------------|----------------------------------|
@@ -52,22 +52,24 @@ Most commonly today, the frontend is broken into three phases: lexical analysis 
 | comment    |  // can't happen in production   |
 
 
-- Parsing - involves parsing the token sequence to identify the of the program. This phase builds a parse tree or an abstract syntax tree, which replaces the linear sequence of tokens with a tree structure.
+#### Parsing 
+This involves parsing the token sequence to identify the program. This phase builds a parse tree or an abstract syntax tree, which replaces the linear sequence of tokens with a tree structure.
 
-- Semantic Analysis - This phase performs checks such as type checking and rejecting incorrect programs. It also constructs the symbol table used to map between identifiers and information relating to their declaration or appearance in the source.
+#### Semantic Analysis 
+This phase performs checks such as type checking and rejecting incorrect programs. It also constructs the symbol table used to map between identifiers and information relating to their declaration or appearance in the source.
+
+By looking at all the steps, we can see how they come together, and a tree representation of the code is built from source.
 
 <img src="https://i.imgur.com/muZGoQt.png" height="70%" width="70%"/>
 
 <img src="https://i.imgur.com/biUHNJq.png" height="50%" width="50%"/>
 
 ### 1.2.3 Middle end
-As explained, the middle end performs optimzations regardless of the source code language and the target machine.
+As explained, the middle end part performs optimizations regardless of the source code language and the target machine.
 As opposed to the front end phase, the middle end analyses are more complex. By estimating how the code and the data
-will flow, the compiler does optimizations ranging from the scope of a function to the entire program (interprocedural). 
+will flow, the compiler does optimizations ranging from the scope of a function to the entire program (interprocedural).
 
-I'll demonstrate it using Constant Propagation. Constant propagation is the process of substituting the values of
-known constants in expressions. Constant propagation eliminates cases in which values are copied from one location or
-variable to another, in order to simply assign their value to another variable.
+I'll demonstrate it using Constant Propagation. Constant propagation is the process of substituting the values of known constants in expressions. Constant propagation eliminates cases in which values are copied from one location or variable to another to assign their value to another variable.
 
 For example, using constant propagation optimization we will get the following: 
 ```
@@ -75,22 +77,21 @@ For example, using constant propagation optimization we will get the following:
   int y = 7 - x / 2;
   return y * (28 / x + 2);
 ```
-Running the first iteration over the code we see that `x` is a candidate for propagation -> 
+By "iterating"  over the code from top to bottom for the first time, we see that `x` is a candidate for propagation -> 
 ```
   int x = 14;
   int y = 7 - 14 / 2;
   return y * (28 / 14 + 2);
 ```
 Now we run a second iteration over the code and see that `y` is a constant as well. `y` being a constant means that the
-return statement is a constant as well giving us...->
+return statement is a constant as well, giving us...->
 ```
   int x = 14;
   int y = 0;
   return 0;
 ```
 
-We can further optimize this code using dead code elimination (The process of removing code which does not affect the 
-program results) we can optimize away `x` and `y'. This results in 
+We can further optimize this code using dead code elimination - The process of removing code that does not affect the program results. We can optimize away `x` and `y' which results in 
 ```
 return 0;
 ```  
