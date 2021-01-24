@@ -49,19 +49,19 @@ type Diagnostic struct {
 
 ### 1.2 How to use it
 First let's define the project structure:
-<pre>
-|-- README.md
-|-- cmd
-|   `-- analyzerName
-|       `-- main.go
-|-- go.mod
-|-- go.sum
-`-- passes
-    `-- passName
-        |-- pass.go
-        |-- pass_test.go
-        `-- testdata
-</pre>
+```
+│── README.md
+│── cmd
+│   └── analyzerName
+│       └── main.go
+│── go.mod
+│── go.sum
+└── passes
+    └── passName
+        │── pass.go
+        │── pass_test.go
+        └── testdata
+```
 
 We create a directory where all of our passes reside in named `passes`. Each pass lives in its package, including its logic and tests. Then we define the usual `cmd` for our executables that contains all the analyzers the module has.
 
