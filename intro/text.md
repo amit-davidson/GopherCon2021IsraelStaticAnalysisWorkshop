@@ -40,7 +40,7 @@ The front end transforms the input program into an intermediate representation (
 Most commonly today, the frontend is broken into three phases: lexical analysis (also known as lexing or scanning), syntax analysis (also known as scanning or parsing), and semantic analysis.
 
 #### Lexing 
-converts a sequence of characters into a sequence of tokens. A token is a pair consisting of a token name and token value. Common token names include keyword, separator, identifier, literal and some of their respectively `while`, `{`, `x`, `"music"`.
+converts a sequence of characters into a sequence of tokens. A token is a pair consisting of a token name and token value.
 
 | Token name | Sample token values              |
 |------------|----------------------------------|
@@ -69,26 +69,46 @@ As explained, the middle end part performs optimizations regardless of the sourc
 As opposed to the front end phase, the middle end analyses are more complex. By estimating how the code and the data
 will flow, the compiler does optimizations ranging from the scope of a function to the entire program (interprocedural).
 
-I'll demonstrate it using Constant Propagation. Constant propagation is the process of substituting the values of known constants in expressions. Constant propagation eliminates cases in which values are copied from one location or variable to another to assign their value to another variable.
+I'll demonstrate it using Constant Propagation. Constant propagation is the process of substituting the values of known
+constants in expressions. Constant propagation eliminates cases in which values are copied from one location or
+variable to another to assign their value to another variable.
 
-For example, using constant propagation optimization we will get the following: 
+The algorithm works by doing iterations from top to bottom and and each pass see if it can improve current state. If no
+more improvement can be made anymore, the algorithm terminates. 
+
+Propagating X:
 ```
-  int x = 14;
+  int x = 14; <-
   int y = 7 - x / 2;
   return y * (28 / x + 2);
 ```
-By "iterating"  over the code from top to bottom for the first time, we see that `x` is a candidate for propagation -> 
+```
+  int x = 14;
+  int y = 7 - 14 / 2; <-
+  return y * (28 / x + 2);
+```
+
 ```
   int x = 14;
   int y = 7 - 14 / 2;
-  return y * (28 / 14 + 2);
+  return y * (28 / 14 + 2); <-
 ```
-Now we run a second iteration over the code and see that `y` is a constant as well. `y` being a constant means that the
-return statement is a constant as well, giving us...->
+Propagating Y:
+```
+  int x = 14; <-
+  int y = 7 - 14 / 2;
+  return y * (28 / 14 + 2); 
+```
+```
+  int x = 14;
+  int y = 0; <-
+  return y * (28 / 14 + 2); 
+```
+
 ```
   int x = 14;
   int y = 0;
-  return 0;
+  return 0; <-
 ```
 
 We can further optimize this code using dead code elimination - The process of removing code that does not affect the program results. We can optimize away `x` and `y' which results in 
