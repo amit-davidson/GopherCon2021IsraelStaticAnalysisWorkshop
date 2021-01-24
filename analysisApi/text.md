@@ -2,7 +2,7 @@
 ### 1.1 tools/go/analysis
 The package defines an API for modular static analysis tools. In other words, it's a common interface for all static code analyzers.
 		
-The primary type in the API is `analysis.Analyzer`.  It describes describes an analysis function: its name, documentation, flags, relationship to other analyzers, and of course, its logic.
+The primary type in the API is `analysis.Analyzer`.  It describes an analysis function: its name, documentation, flags, relationship to other analyzers, and of course, its logic.
 
 ```
 type Analyzer struct {
