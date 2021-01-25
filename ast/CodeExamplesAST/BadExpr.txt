@@ -1,0 +1,8 @@
+package main
+func main() {
+	if {
+		println("Hello, World!")
+	}
+}
+
+// focus on the missing condition if and how it's represented in the AST

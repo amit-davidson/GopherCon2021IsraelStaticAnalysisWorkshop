@@ -120,7 +120,7 @@ The syntax is "abstract" in the sense that it does not represent every detail ap
 just the structural or content-related details. For instance, grouping parentheses are implicit in the tree structure,
 so these are not represented as separate nodes.
 
-### 1.3 AST package members Note: Expand on members
+### 1.3 AST package members
 The AST package contains the types used to represent syntax trees in Go. We can divide the members into three categories:
 Interfaces, concrete types, and others.
 
@@ -177,45 +177,50 @@ An `ast.Object` describes a named entity created by a declaration such as a `var
 isn't really an entity in the AST graph but a language representation, so it's doesn't implement the `node` 
 interface as well.
 
-It's worth mentioning again that`AST` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
+It's worth mentioning again that `AST` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
+
+### Exercise:
+In the folder CodeExamplesAST There are some interesting programs. Using our AST visualizer from earlier, take each of 
+the program and look at their AST. Focus on the different types of nodes and the properties each one contains.   
 
 ### 1.4 Loading a program using the parser
 To load the program, we need to parse it first
 ```
-package main  
+package main
 
-import (  
-  "fmt"  
-  "go/ast"
-  "go/parser"
-  "go/token"
-)  
+import (
+	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
+)
 
-func main() {  
+func main() {
 
-src := `package main  
+	src := `package main  
 
 import "fmt"  
 
 func main() {  
    fmt.Println("hello world")}  
-`  
+`
 
-fset := token.NewFileSet()  
-f, err := parser.ParseFile(fset, "", src, 0)  
- if err != nil {  
-    fmt.Println(err)  
-    return  
-}  
- visitor := func(node ast.Node) bool {  
-    strLit, ok := (node).(*ast.BasicLit)  
-    if ok && strLit.Value == "\"hello world\"" {  
-       fmt.Println("We found hello world!")
-       return false  
-    }  
-    return true  
-}  
- ast.Inspect(f, visitor)  
+	fset := token.NewFileSet()
+	f, err := parser.ParseFile(fset, "", src, 0)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	visitor := func(node ast.Node) bool {
+		strLit, ok := (node).(*ast.BasicLit)
+		if ok && strLit.Value == "\"hello world\"" {
+			pos := fset.Position(strLit.Pos())
+			fmt.Printf("We found hello world in pos:%d:%d", pos.Line, pos.Column)
+			return false
+		}
+		return true
+	}
+	ast.Inspect(f, visitor)
 }
 ```
 
@@ -243,19 +248,20 @@ f, err := parser.ParseFile(fset, "", src, 0)
 
 Finally, we define a visitor function that will be called with each node inside the AST. We pass our function to
 `ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the
-`Hello World` string literal. We return `true` each iteration to keep traversing the tree until we found the desired 
+`Hello World` string literal with it's position in the code. We return `true` each iteration to keep traversing the tree until we found the desired 
 node. Then, we print our message and return false to indicate we're done searching and exit the traverse function.
 
 ```go
- visitor := func(node ast.Node) bool {  
-    strLit, ok := (node).(*ast.BasicLit)  
-    if ok && strLit.Value == "\"hello world\"" {  
-       fmt.Println("We found hello world!")
-       return false  
-    }  
-    return true  
-}  
- ast.Inspect(f, visitor)  
+	visitor := func(node ast.Node) bool {
+		strLit, ok := (node).(*ast.BasicLit)
+		if ok && strLit.Value == "\"hello world\"" {
+			pos := fset.Position(strLit.Pos())
+			fmt.Printf("We found hello world in pos:%d:%d", pos.Line, pos.Column)
+			return false
+		}
+		return true
+	}
+	ast.Inspect(f, visitor)
 ```
 
 ### 1.5 Writing our first analyzer!
