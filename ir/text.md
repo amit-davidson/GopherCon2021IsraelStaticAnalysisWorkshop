@@ -61,82 +61,93 @@ We can use this  [SSA visualizer](http://golang-ssaview.herokuapp.com/)  to view
 
 Let's consider this program:
 ```
-package main  
-  
-import (  
-   "fmt"  
-   "math/rand"
- )  
-  
-func main() {  
-   a := 4  
-  if rand.Int() > 0 {  
-      fmt.Println(a)  
-   }  
+package main
+
+import (
+    "fmt"
+	"math"
+	"os"
+)
+
+func main() {
+	shapeType := os.Args[1]
+	squareOrCircleArea(shapeType)
+}
+
+func squareOrCircleArea(shapeType string) {
+	r := 2.0
+	area := r * r
+	if shapeType == "circle" {
+		area *= math.Pi
+	}
+	fmt.Printf("Total area is: %g", area)
 }
 ```
 
-It's SSA representation looks like the following. At the top, we can see the package members, the `main` function, and the implicit `init` function.
-After that, we can see the `init` function it's [attributes](https://pkg.go.dev/golang.org/x/tools/go/ssa#Function), and it's CFG. We'll ignore that for now and focus on the `main` function CFG. 
-I have added comments explaining the interesting line above them.  
-```
-package main.go:
-  func  init       func()
-  var   init$guard bool
-  func  main       func()
-
-# Name: main.go.init
-# Package: main.go
-# Synthetic: package initializer
-func init():
+I'll focus on the `squareOrCircleArea` function, but you can inspect the full ssa program in the visualizer.
+```go
+func squareOrCircleArea(shapeType string):
 0:                                                                entry P:0 S:2
-   t0 = *init$guard                                                   bool
-   if t0 goto 2 else 1
-1:                                                           init.start P:1 S:1
-   *init$guard = true:bool
-   t1 = math/rand.init()                                                ()
-   t2 = fmt.init()                                                      ()
-   jump 2
-2:                                                            init.done P:2 S:0
-   return
-
-# Name: main.go.main
-# Package: main.go
-# Location: main.go:8:6
-# Locals:
-#   0: t0 int
-func main():
-0:                                                                entry P:0 S:2
-    # `a` is defined
-   t0 = local int (a)                                                 *int
-   # `a` is assigned with 4
-   *t0 = 4:int
-   # A variable used to hold the `rand` result is defined and assigned - doesn't appear in the source code
-   t1 = math/rand.Int()                                                int
-   t2 = t1 > 0:int                                                    bool
-   # According to conditions results, gotos are used to determine the flow of the function
-   if t2 goto 1 else 2
+        t0 = 2:float64 * 2:float64                                      float64
+        t1 = shapeType == "circle":string                                  bool
+        if t1 goto 1 else 2
 1:                                                              if.then P:1 S:1
-   t3 = *t0                                                            int
-   # an interface used to hold varargs is defined
-   t4 = new [1]interface{} (varargs)                       *[1]interface{}
-   t5 = &t4[0:int]                                            *interface{}
-   # `a` is converted to an interface so it can be passed to the function 
-   t6 = make interface{} <- int (t3)                           interface{}
-   *t5 = t6
-   t7 = slice t4[:]                                          []interface{}
-   t8 = fmt.Println(t7...)                              (n int, err error)
-   jump 2
+        t2 = t0 * 3.14159:float64                                       float64
+        jump 2
 2:                                                              if.done P:2 S:0
-   t9 = *t0                                                            int
-   # Instruction inserted by the compiler
-   rundefers
-   return
+        t3 = phi [0: t0, 1: t2] #area                                   float64
+        t4 = new [1]interface{} (varargs)                       *[1]interface{}
+        t5 = &t4[0:int]                                            *interface{}
+        t6 = make interface{} <- float64 (t3)                       interface{}
+        *t5 = t6
+        t7 = slice t4[:]                                          []interface{}
+        t8 = fmt.Printf("Total area is: %g":string, t7...)   (n int, err error)
+        return
 ```
-As you can see, some instructions that we don't expect to see at the source code level were inserted by the compiler in the SSA format. Like the example of the if condition, they are a more verbose form of the same instruction.
 
+Looking at the first basic block (0) we can see straight away that the variable names were replaced with `t` followed by a number.
+Also, the assignment to `r` is missing and it's values are already used in the assignment to `area`. This is the result 
+of constant propagation and dead code elimination indicating this code is already optimized.
+
+In the end of the block, we can see a conditional goto (as opposed to the conventional if structure) to the correct
+basic block, according to the shape type.
+
+```go
+0:                                                                entry P:0 S:2
+        t0 = 2:float64 * 2:float64                                      float64
+        t1 = shapeType == "circle":string                                  bool
+        if t1 goto 1 else 2
+```
+In the source code, we multiply the value of area with PI and assign it back to the area. In SSA form, each variable is 
+assigned once. We can see that `t0` is no longer used and instead `t2` is declared, even though in high level they point
+to the same variable.   
+```go
+1:
+        t2 = t0 * 3.14159:float64                                       float64
+        jump 2
+```
+
+In the last block we see an instruction called `phi`. This instruction represents an SSA φ-node which combines values
+that differ across incoming control-flow edges and yields a new value. We won't delve deeper, but in short, it says
+the value can be either `t0` or `t2`, depending on the control flow.
+
+At that point, we're ready to print the variable, but there are many instructions between `t3` and the `fmt.Printf` function.
+IR is much more verbose and includes instructions that may by represented with single "action" in the source code. In 
+this case, `fmt.Printf` uses variadic parameters. Behind the scenes, we have to declare a list of interfaces, convert 
+our `float64` to the `interface{}` type and only then pass it to the function.   
+```go
+2:                                                              if.done P:2 S:0
+        t3 = phi [0: t0, 1: t2] #area                                   float64
+        t4 = new [1]interface{} (varargs)                       *[1]interface{}
+        t5 = &t4[0:int]                                            *interface{}
+        t6 = make interface{} <- float64 (t3)                       interface{}
+        *t5 = t6
+        t7 = slice t4[:]                                          []interface{}
+        t8 = fmt.Printf("Total area is: %g":string, t7...)   (n int, err error)
+        return
+```
 ### 2.5 SSA vs AST
-   AST shows us the structure of the code. How different statements in the code relate to each other. SSA, on the other hand, shows us how the code flows.
+AST shows us the structure of the code. How different statements in the code relate to each other. SSA, on the other hand, shows us how the code flows.
 
 When applying this logic to static analysis, we'll see that SSA is used for more complex analysis where we need to determine the flow of the data. In contrast, AST will be used for simpler, more structure related analyses.
 
