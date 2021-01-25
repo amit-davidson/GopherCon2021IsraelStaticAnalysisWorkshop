@@ -19,38 +19,39 @@ y1 := 1
 y2 := 2
 x1 := y2
 ```
-Humans can see that the first assignment is unnecessary and that the value of `y`  used in the third line comes from the second assignment of `y'. In SSA form, both of these are immediate
+Humans can see that the first assignment is unnecessary and that the value of `y`  used in the third line comes from the
+second assignment of `y`. In SSA form, both of these are immediate
 
 ### 2.3 SSA package members
 The package tools/go/ssa defines the representation of elements of Go programs in SSA format.
 
 Program - A Program is a partial or complete Go program converted to an SSA form.
 
-<img src="https://i.imgur.com/FHbYxeU.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/DpzHQib.png" width="50%" height="50%" />
 
 Package - A Package is a single analyzed Go package containing Members for all package-level functions, variables, constants, and types it declares.
 
-<img src="https://i.imgur.com/eLzMEHR.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/stQ9izj.png" width="50%" height="50%" />
 
 Function - Function represents the parameters, results, and code of a function or method.
 
-<img src="https://i.imgur.com/FqN1GdN.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/5KLBY6r.png" width="50%" height="50%" />
 
 Basic Block - BasicBlock represents an SSA basic block. A set of instructions that are executed and can't jump somewhere else. Basic blocks are connected using conditions and goto statements.
  
-<img src="https://i.imgur.com/XGrpRkH.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/dBLj172.png" width="50%" height="50%" />
 
 Control Flow Graph (CFG) - In a control-flow graph, each node in the graph represents a basic block. Together, they compose all paths that might be traversed through a program during its execution.
 
-<img src="https://i.imgur.com/jpmXl4P.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/K1u4MZ0.png" width="50%" height="50%" />
 
 Instruction - a statement that consumes values and performs computation. For example, `Call`, `Return`, `TypeAssert`, etc
 
-<img src="https://i.imgur.com/VJ5mxF3.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/DvheFlc.png" width="50%" height="50%" />
 
 Value - an expression that yields a value. For example, Function calls are both `Instruction` and `Value` since they both consume values and yield a value.
 
-<img src="https://i.imgur.com/UlKSNVu.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/oJg97Re.png" width="50%" height="50%" />
 
 The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primitives like `MakeChan` and `Alloc`. 
 
