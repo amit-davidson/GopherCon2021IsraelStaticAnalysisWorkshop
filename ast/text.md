@@ -121,13 +121,63 @@ just the structural or content-related details. For instance, grouping parenthes
 so these are not represented as separate nodes.
 
 ### 1.3 AST package members Note: Expand on members
-The AST package contains the types used to represent syntax trees in Go. We can divide the members into three categories: Interfaces, concrete types, and others.
+The AST package contains the types used to represent syntax trees in Go. We can divide the members into three categories:
+Interfaces, concrete types, and others.
 
-- Interfaces: `Node`, `Decl`, `Spec`, `Stmt`, `Expr`
 - Concrete Types: The full list is [long](https://golang.org/pkg/go/ast/#ArrayType). Those are the tree nodes, and they contain values such as: `FuncDecl`, `IncDecStmt`, `Ident`, `Comment`, and so on.
+- Interfaces: `Node`, `Decl`, `Spec`, `Stmt`, `Expr`
 - Others: `Package`, `File`, `Scope`, `Object`. They do not fall to a specific category but rather 
 
-As you can see, the `AST` package contains only the "abstract" parts and ignores parentheses, colon, etc...
+Well take a look at `AssignStmt`
+```go
+type AssignStmt struct {
+    Lhs    []Expr      // All the variables to left side of assign operator
+    TokPos token.Pos   // position of operator
+    Tok    token.Token // assignment token. `=`, `:=`, `+=`, `<<=` and so on...
+    Rhs    []Expr      // Expressions to right of the assignment operator 
+}
+```
+For example, in the expression: `a := 5`, 
+ - Lhs is [a]
+ - Rhs is [5]
+ - TokPos [3] (the position of the ":" character)
+ - Tok [:=]
+ 
+Pretty straight forward. Now we'll look `Expr` which`AssignStmt` implements. Expression is common interface for 
+everything that returns a value.
+
+```go
+type Expr interface {
+    Node
+    // contains filtered or unexported methods
+}
+```
+
+As you can see, it only contains the node interface (which is implemented by all the nodes on the AST graph) and 
+serves as a common interface for all the expression nodes.
+
+From the other's group we'll look at `Object` which is the most complicated.
+```go
+type Object struct {
+    Kind ObjKind
+    Name string      // declared name
+    Decl interface{} // corresponding Field, XxxSpec, FuncDecl, LabeledStmt, AssignStmt, Scope; or nil
+    Data interface{} // object-specific data; or nil
+    Type interface{} // placeholder for type information; may be nil
+}
+```
+Where `Data` can be any of 
+```go
+Kind    Data type         Data value
+Pkg     *Scope            package scope
+Con     int               iota for the respective declaration
+```
+
+An `ast.Object` describes a named entity created by a declaration such as a `var`, `type`, or `func` declarations. `ast.Object`
+isn't really an entity in the AST graph but a language representation, so it's doesn't implement the `node` 
+interface as well.
+
+It's worth mentioning again that`AST` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
 
 ### 1.4 Loading a program using the parser
 To load the program, we need to parse it first
