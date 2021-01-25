@@ -219,19 +219,44 @@ f, err := parser.ParseFile(fset, "", src, 0)
 }
 ```
 
+
 We first create a `fileSet`, representing a set of source files. `FileSet` has the properties `files` and `base`
 recording the used files and all the files' total size. Using the size property of `token.File`, we can easily determine
 in which file a statement is, given its position.
 
-Then, we call the parser.ParseFile function, providing it our `fileSet` to populate it, an empty path, a string as the
+```go
+fset := token.NewFileSet()  
+```
+
+Then, we call the `parser.ParseFile` function, providing it our `fileSet` to populate it, an empty path, a string as the
 source so the parser will use it instead of loading from a file, and a build mode - 0. In this example, we used 0 to 
 fully load the program, but any other mode can be used.
 
+```go
+f, err := parser.ParseFile(fset, "", src, 0)  
+ if err != nil {  
+    fmt.Println(err)  
+    return  
+}  
+```
 > Tip: Instead of iterating file by file, you can load an entire directory using `parser.ParseDir`
 
-Finally, we call `ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the
+Finally, we define a visitor function that will be called with each node inside the AST. We pass our function to
+`ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the
 `Hello World` string literal. We return `true` each iteration to keep traversing the tree until we found the desired 
-node. Then, we print our message and return false to indicate we're done searching exit the traverse function.
+node. Then, we print our message and return false to indicate we're done searching and exit the traverse function.
+
+```go
+ visitor := func(node ast.Node) bool {  
+    strLit, ok := (node).(*ast.BasicLit)  
+    if ok && strLit.Value == "\"hello world\"" {  
+       fmt.Println("We found hello world!")
+       return false  
+    }  
+    return true  
+}  
+ ast.Inspect(f, visitor)  
+```
 
 ### 1.5 Writing our first analyzer!
 
