@@ -24,6 +24,7 @@ second assignment of `y`. In SSA form, both of these are immediate
 
 ### 2.3 SSA package members
 The package tools/go/ssa defines the representation of elements of Go programs in SSA format.
+The key types form a hierarchical structure.
 
 Program - A Program is a partial or complete Go program converted to an SSA form.
 
@@ -52,6 +53,10 @@ Instruction - a statement that consumes values and performs computation. For exa
 Value - an expression that yields a value. For example, Function calls are both `Instruction` and `Value` since they both consume values and yield a value.
 
 <img src="https://i.imgur.com/oJg97Re.png" width="50%" height="50%" />
+
+And when combined:
+
+<img src="https://i.imgur.com/W02MErA.png" width="70%" height="70%" />
 
 The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primitives like `MakeChan` and `Alloc`. 
 
