@@ -180,8 +180,8 @@ interface as well.
 It's worth mentioning again that `AST` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
 
 ### Exercise:
-In the folder CodeExamplesAST There are some interesting programs. Using our AST visualizer from earlier, take each of 
-the program and look at their AST. Focus on the different types of nodes and the properties each one contains.   
+In the folder CodeExamples there are some interesting programs. Using our AST visualizer from earlier, take each of 
+the program and look at their AST. I added comments with notes with explaining the important points.   
 
 ### 1.4 Loading a program using the parser
 To load the program, we need to parse it first

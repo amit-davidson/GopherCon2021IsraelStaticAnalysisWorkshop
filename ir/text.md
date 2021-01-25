@@ -146,6 +146,12 @@ our `float64` to the `interface{}` type and only then pass it to the function.
         t8 = fmt.Printf("Total area is: %g":string, t7...)   (n int, err error)
         return
 ```
+
+### Exercise
+In the folder CodeExamples there are some interesting programs. Using our SSA visualizer from earlier, take each of 
+the program and look at their SSA. I added comments with notes with explaining the important points. 
+
+
 ### 2.5 SSA vs AST
 AST shows us the structure of the code. How different statements in the code relate to each other. SSA, on the other hand, shows us how the code flows.
 
