@@ -28,16 +28,25 @@ The key types form a hierarchical structure.
 
 Program - A Program is a partial or complete Go program converted to an SSA form.
 
-<img src="https://i.imgur.com/DpzHQib.png" width="50%" height="50%" />
+<table>
+  <tr>
+    <td>
+    ``` go
+        type Program struct {
+        	Fset *token.FileSet // position information for the files of this Program
+        
+        	MethodSets typeutil.MethodSetCache // cache of type-checker's method-sets
+        	// contains filtered or unexported fields
+        }
+    ```
+    </td>
+  </tr>
+  <tr>
+       <img src="https://i.imgur.com/DpzHQib.png" width="50%" height="50%" />
+  </tr>
+ </table>
 
-``` go
-type Program struct {
-	Fset *token.FileSet // position information for the files of this Program
 
-	MethodSets typeutil.MethodSetCache // cache of type-checker's method-sets
-	// contains filtered or unexported fields
-}
-```
 
 Package - A Package is a single analyzed Go package containing Members for all package-level functions, variables, constants, and types it declares.
 
