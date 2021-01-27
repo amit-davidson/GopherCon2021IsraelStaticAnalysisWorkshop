@@ -26,39 +26,69 @@ second assignment of `y`. In SSA form, both of these are immediate
 The package `tools/go/ssa` defines the representation of elements of Go programs in SSA format.
 The key types form a hierarchical structure.
 
-Program - A Program is a partial or complete Go program converted to an SSA form.
+#### Program
+A Program is a partial or complete Go program converted to an SSA form.
 
-<table>
-  <tr>
-    <td>
-    ``` go
-        type Program struct {
-        	Fset *token.FileSet // position information for the files of this Program
-        
-        	MethodSets typeutil.MethodSetCache // cache of type-checker's method-sets
-        	// contains filtered or unexported fields
-        }
-    ```
-    </td>
-  </tr>
-  <tr>
-       <img src="https://i.imgur.com/DpzHQib.png" width="50%" height="50%" />
-  </tr>
- </table>
+<img src="https://i.imgur.com/DpzHQib.png" width="50%" height="50%" />
 
+``` go
+type Program struct {
+	Fset *token.FileSet // position information for the files of this Program
 
+	MethodSets typeutil.MethodSetCache // cache of type-checker's method-sets
+	// contains filtered or unexported fields
+}
+```
 
-Package - A Package is a single analyzed Go package containing Members for all package-level functions, variables, constants, and types it declares.
+#### Package
+A Package is a single analyzed Go package containing Members for all package-level functions, variables, constants, and types it declares.
 
 <img src="https://i.imgur.com/stQ9izj.png" width="50%" height="50%" />
 
+```go
+type Package struct {
+	Prog    *Program          // the owning program
+	Pkg     *types.Package    // the corresponding go/types.Package
+	Members map[string]Member // all package members keyed by name (incl. init and init#%d)
+	// contains filtered or unexported fields
+}
+```
 Function - Function represents the parameters, results, and code of a function or method.
 
 <img src="https://i.imgur.com/5KLBY6r.png" width="50%" height="50%" />
 
+```go
+type Function struct {
+	Signature *types.Signature
+
+	Synthetic string // provenance of synthetic function; "" for true source functions
+
+	Pkg       *Package      // enclosing package; nil for shared funcs (wrappers and error.Error)
+	Prog      *Program      // enclosing program
+	Params    []*Parameter  // function parameters; for methods, includes receiver
+	FreeVars  []*FreeVar    // free variables whose values must be supplied by closure
+	Locals    []*Alloc      // local variables of this function
+	Blocks    []*BasicBlock // basic blocks of the function; nil => external
+	Recover   *BasicBlock   // optional; control transfers here after recovered panic
+	AnonFuncs []*Function   // anonymous functions directly beneath this one
+	// contains filtered or unexported fields
+
+```
+
 Basic Block - BasicBlock represents an SSA basic block. A set of instructions that are executed and can't jump somewhere else. Basic blocks are connected using conditions and goto statements.
  
 <img src="https://i.imgur.com/dBLj172.png" width="50%" height="50%" />
+
+```go
+type BasicBlock struct {
+	Index   int    // index of this block within Parent().Blocks
+	Comment string // optional label; no semantic significance
+
+	Instrs       []Instruction // instructions in order
+	Preds, Succs []*BasicBlock // predecessors and successors
+	// contains filtered or unexported fields
+}
+```
 
 Control Flow Graph (CFG) - In a control-flow graph, each node in the graph represents a basic block. Together, they compose all paths that might be traversed through a program during its execution.
 
@@ -68,9 +98,55 @@ Instruction - a statement that consumes values and performs computation. For exa
 
 <img src="https://i.imgur.com/DvheFlc.png" width="50%" height="50%" />
 
+```go
+type Instruction interface {
+	String() string
+
+	// Parent returns the function to which this instruction
+	// belongs.
+	Parent() *Function
+
+	// Block returns the basic block to which this instruction
+	// belongs.
+	Block() *BasicBlock
+
+	// Operands returns the operands of this instruction: the
+	// set of Values it references.
+	Operands(rands []*Value) []*Value
+
+	Pos() token.Pos
+	// contains filtered or unexported methods
+}
+```
+
 Value - an expression that yields a value. For example, function calls are both `Instruction` and `Value` since they both consume values and yield a value.
 
 <img src="https://i.imgur.com/oJg97Re.png" width="50%" height="50%" />
+
+```go
+type Value interface {
+	Name() string
+
+	String() string
+
+	// Type returns the type of this value.  Many instructions
+	// (e.g. IndexAddr) change their behaviour depending on the
+	// types of their operands.
+	Type() types.Type
+
+	// Parent returns the function to which this Value belongs.
+	// It returns nil for named Functions, Builtin, Const and Global.
+	Parent() *Function
+
+	// Referrers returns the list of instructions that have this
+	// value as one of their operands; it may contain duplicates
+	// if an instruction has a repeated operand.
+	//
+	// Instruction.Operands contains the inverse of this relation.
+	Referrers() *[]Instruction
+	Pos() token.Pos
+}
+```
 
 And when combined:
 
