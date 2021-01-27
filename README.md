@@ -6,8 +6,12 @@ Hi, and welcome to Static Analysis with Go - A Practitioner's Guide.
 This is a workshop about writing static code analyzers in Go for Go.
 In this lecture you will learn about how to write a static code analysis in Go, and implement one yourself. 
 
+By the end of this workshop, you'll have a better understanding of the Go packages related to writing static code
+analyzers and you'll also know how to write a code analyzer yourself. 
 
-I will start the lecture by giving an overview of static analyzers and how compilers work. Afterwards, you will learn about 2 different representations (AST and SSA) of the code, and write an analyzer in each of those. You will also learn about the analysis API making writing analyzers easier and finish with a discussion.
+I will start the lecture by giving an overview of static analyzers and how compilers work. Afterwards, you will learn
+about 2 different representations of the code (AST and SSA), and write an analyzer in each of those. 
+You will also learn about the analysis API making writing analyzers easier and then we'll finish with a discussion.
 
 ### Contents:
 1. [Introduction to compilers and static analysis](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/intro/text.md)
