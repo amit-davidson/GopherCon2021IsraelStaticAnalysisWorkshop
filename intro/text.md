@@ -23,11 +23,14 @@ I've gathered a list of issues that could be solved using static analyses tools:
 
 > Program analysis can be performed without executing the program (static program analysis), during runtime (dynamic program analysis) or in a combination of both.
 
-The main difference between static and dynamic analyses is that dynamic is performed at runtime, whereas static works without running it.
+The obvious difference between static and dynamic analyses is that dynamic is performed at runtime, whereas static works without running it.
 
 In practice, the difference is much more apparent. The main benefit of dynamic code analysis is that it finds bugs that can actually occur. Also, they are usually easier to write and require fewer resources to run. The problem with dynamic code analyses is that they make the code run slower (I'm looking at you `go race`), which might be intolerant in production. 
 
-On the other hand, static analyses can also find bugs **that may**/**before they** occur. The reason is that static analyses can evaluate paths of your code or workloads that don't often happen in production. Evaluating all the possibilities comes at the expanse of the time and resources required to perform analyses and inaccuracy of the final result. Another consideration is 
+On the other hand, static analyses can also find bugs **that may**/**before they** occur. The reason is that static
+analyses can evaluate paths of the code or workloads that don't often happen in production. 
+Evaluating all the possibilities comes at the expanse of the time and resources required to perform analyses and
+inaccuracy of the final result.
 
 ## 1.2 Compilers
 ### 1.2.1 Overview
@@ -74,16 +77,16 @@ By looking at all the steps, we can see how they come together, and a tree repre
 <img src="https://i.imgur.com/biUHNJq.png" height="50%" width="50%"/>
 
 ### 1.2.3 Middle end
-As explained, the middle end part performs optimizations regardless of the source code language and the target machine.
-As opposed to the front end phase, the middle end analyses are more complex. By estimating how the code and the data
-will flow, the compiler does optimizations ranging from the scope of a function to the entire program (interprocedural).
+The middle end part performs optimizations regardless of the source code language and the target machine.
+As opposed to the front end phase, the middle end analyses are more complex. By estimating how the data will flow through
+the code, the compiler does optimizations ranging from the scope of a function to the entire program (interprocedural).
 
-I'll demonstrate it using Constant Propagation. Constant propagation is the process of substituting the values of known
+I'll demonstrate an optimization using Constant Propagation mentioned earlier. Constant propagation is the process of substituting the values of known
 constants in expressions. Constant propagation eliminates cases in which values are copied from one location or
 variable to another to assign their value to another variable.
 
 The algorithm works by doing iterations from top to bottom and and each pass see if it can improve current state. If no
-more improvement can be made anymore, the algorithm terminates. 
+more improvements can be made anymore, the algorithm terminates. 
 
 Propagating X:
 ```
@@ -120,7 +123,8 @@ Propagating Y:
   return 0; <-
 ```
 
-We can further optimize this code using dead code elimination - The process of removing code that does not affect the program results. We can optimize away `x` and `y' which results in 
+We can further optimize this code using dead code elimination - The process of removing code that does not affect 
+the program results. We can optimize away `x` and `y' which results in 
 ```
 return 0;
 ```  
