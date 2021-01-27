@@ -1,5 +1,5 @@
-## 1. Conclusion and further discussion  
-### 1.1 Precision and Soundness
+## 5. Conclusion and further discussion  
+### 5.1 Precision and Soundness
 Soundness and precision are two properties used to measure static analysis tools.
 
 A static analysis tool is sound if it finds all of its occurrences in the code for a specific property to check. In other words, the fewer false negatives the static tool has, the more sound it is.
@@ -22,7 +22,7 @@ When you'll write static analysis tools, you might encounter where this trade of
 Usually, it's easier to implement a more sounder analysis then a more precise one, so in reality, most of the tools go
 in this direction. 
 
-## 1.2 Other tools
+## 5.2 Other tools
 There are famous built-in tools such as `go vet` and `go fmt`, but there are many more others:
 
 - `go fmt` - Gofmt formats Go programs. It uses tabs for indentation and blanks for alignment. Alignment assumes that an editor is using a fixed-width font.
@@ -38,9 +38,9 @@ It contains tools you can integrate into your toolchain.
 
 - golanglint-ci is a fast Go linters runner. It runs linters in parallel, uses caching, supports `yaml` config, has integrations with all major IDE, and has dozens of linters included. You can look at the full list of linters [here](https://golangci-lint.run/usage/linters/).
 
-### 1.3 Further reading:
+### 5.3 Further reading:
 - A deeper dive into the topics of the AST part in Go - https://github.com/golang/example/tree/master/gotypes  
 - A deeper dive into SSA in GO- https://www.youtube.com/watch?v=uTMvKVma5ms&ab_channel=GopherAcademy
 
-### 1.4 Discussion
+### 5.4 Discussion
    Any questions?

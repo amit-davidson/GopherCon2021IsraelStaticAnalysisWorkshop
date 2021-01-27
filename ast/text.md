@@ -1,5 +1,5 @@
 ## Compiler front end, AST, and analysis introduction
-### 1.1 Go packages overview
+### 2.1 Go packages overview
 There are six relevant packages regarding the compiler front end when talking about static analysis:
 
 - [token](https://golang.org/pkg/go/token/) - Package `token` defines constants representing the lexical tokens of Go
@@ -13,7 +13,7 @@ The `scanner` package is fed with `[]byte` representing the source code. Its out
 `token` package, and the parser package uses them to create the `AST` tree. After the tree is constructed,
 the parser runs type-checking algorithms run over the tree, validates its correctness, and evaluates constants.
 
-### 1.2 What is AST?
+### 2.2 What is AST?
 An abstract syntax tree (AST) is a way of representing the syntax of a programming language as a hierarchical tree-like structure. Let's take a look at the following program for an explanation.
 
 ``` go
@@ -122,7 +122,7 @@ The syntax is "abstract" in the sense that it does not represent every detail ap
 just the structural or content-related details. For instance, grouping parentheses are implicit in the tree structure,
 so these are not represented as separate nodes.
 
-### 1.3 AST package members
+### 2.3 AST package members
 The AST package contains the types used to represent syntax trees in Go. We can divide the members into three categories:
 Interfaces, concrete types, and others.
 
@@ -177,11 +177,11 @@ isn't really an entity in the AST graph but a language representation, so it's d
 
 It's worth mentioning again that `AST` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
 
-### Exercise:
+### 2.4 Exercise:
 In the folder CodeExamples there are some interesting programs (well... AST-wise). Using our AST visualizer from earlier, take each of 
 the program and look at their AST. I added comments explaining the important points.   
 
-### 1.4 Loading a program using the parser
+### 2.5 Loading a program using the parser
 To load the program, we need to parse it first
 ``` go
 package main
@@ -262,6 +262,11 @@ visitor := func(node ast.Node) bool {
 ast.Inspect(f, visitor)
 ```
 
-### 1.5 Writing our first analyzer!
+### 2.6 Writing our first analyzer!
 
+### 2.7 Congratulations
+You have a good understanding of what AST is, the different Go packages used to create static code analyzers that 
+interact with it and how to write such analyzers.  
 
+In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/text.md) 
+we'll focus on the middle end level, and see how analyzer "operating" in this level work.

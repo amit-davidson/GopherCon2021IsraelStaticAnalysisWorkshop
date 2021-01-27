@@ -1,5 +1,5 @@
-## 1 Analysis API:
-### 1.1 tools/go/analysis
+## 4 Analysis API:
+### 4.1 tools/go/analysis
 The package defines an API for modular static analysis tools. In other words, it's a common interface for all static code analyzers.
 
       
@@ -48,7 +48,7 @@ type Diagnostic struct {
 }
 ```
 
-### 1.2 How to use it
+### 4.2 How to use it
 First let's define the project structure:
 ```
 │── README.md
@@ -73,7 +73,7 @@ part will be taken care of by the analysis API so we can ignore it.
 
 Next , we need a way to run the Analyzer and to test it.
 
-### 1.3 Running our code
+### 4.3 Running our code
 inside `main.go`, we'll add the following code. 
 
 ``` go
@@ -90,7 +90,7 @@ Analyzers are provided in the form of packages that a driver program is expected
 The [`singlechecker`](https://pkg.go.dev/golang.org/x/tools/go/analysis/singlechecker) package provides the `main` function for a command that runs one Analyzer. By convention, each Analyzer should be accompanied by a singlechecker-based command defined in its entirety as: This code calls our Analyzer. 
 If we wanted our command to run multiple analyzers, we would have to use [`multichecker`](https://pkg.go.dev/golang.org/x/tools/go/analysis/multichecker).
 
-### 1.4 Testing our code
+### 4.4 Testing our code
 The [`analysistest`](https://godoc.org/golang.org/x/tools/go/analysis/analysistes) subpackage provides utilities for testing an Analyzer. Using `analysistest.Run`, it is possible to run an analyzer on a package of `testdata` files and check that it reported all the expected diagnostics.
 Expectations are expressed using "// want ..." comments in the input code, such as the following:
 
@@ -104,7 +104,7 @@ func main() {
 }
 ```
 
-### 1.5 Integrating it as part of our toolchain. 
+### 4.5 Integrating it as part of our toolchain. 
 We can run our analysis in 2 ways:
 1. Run it directly
 2. Using `go vet` with the following command: 
@@ -112,5 +112,12 @@ We can run our analysis in 2 ways:
 go vet -vettool=$(which analyzer name) path/to/files
 ```
 
-### 1.6 Implementing a code analyzer using the analysis api.   
+### 4.6 Implementing a code analyzer using the analysis api.   
 In this section, we'll convert our `ArgsOverwrite` Analyzer from earlier to the analysis API
+
+### 4.7 Congratulations
+You have a good understanding of what the analysis API is and how to use it help us in writing analyses in the future.
+
+In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/conclusion/text.md)
+we'll conclude this workshop by touching a point regarding static code analyzers in general and take a look at other code
+analyzers written by the Go community.  

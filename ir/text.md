@@ -1,8 +1,8 @@
-## 2. IR
-### 2.1 What is IR?
+## 3. IR
+### 3.1 What is IR?
 An **intermediate representation** (**IR**) is the code used internally by a compiler to represent source code. An IR is designed to be conducive for further processing, such as optimization and translation. A "good" IR must be _accurate_ – capable of representing the source code without loss of information  – and _independent_ of any particular source or target language.
    
-### 2.2 What is SSA?
+### 3.2 What is SSA?
 SSA stands for static single assignment. It's a property of an IR **that requires each variable to be assigned exactly once**, and every variable be defined before it is used. 
 The primary usefulness of SSA comes from how it simplifies the properties of variables and improves compilers optimizations.
 
@@ -22,7 +22,7 @@ x1 := y2
 Humans can see that the first assignment is unnecessary and that the value of `y`  used in the third line comes from the
 second assignment of `y`. In SSA form, both of these are immediate
 
-### 2.3 SSA package members
+### 3.3 SSA package members
 The package `tools/go/ssa` defines the representation of elements of Go programs in SSA format.
 The key types form a hierarchical structure.
 
@@ -66,7 +66,7 @@ And when combined:
 
 The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primitives like `MakeChan` and `Alloc`. 
 
-### 2.4 Viewing SSA
+### 3.4 Viewing SSA
 We can use this  [SSA visualizer](http://golang-ssaview.herokuapp.com/)  to view the SSA form of programs.
 
 > You can also use `go.tools/cmd/ssadump` in view SSA in your CLI
@@ -159,12 +159,12 @@ our `float64` to the `interface{}` type and only then pass it to the function.
         return
 ```
 
-### Exercise
+### 3.6 Exercise
 In the folder CodeExamples there are some interesting programs. Using our SSA visualizer from earlier, take each of 
 the program and look at their SSA. I added comments with notes with explaining the important points. 
 
 
-### 2.5 SSA vs AST
+### 3.6 SSA vs AST
 AST shows us the structure of the code. How different statements in the code relate to each other. SSA, on the other
 hand, shows us how the code flows. That's why constant propagation analyzing values across the function is done on the IR
 level as opposed to the AST. 
@@ -172,6 +172,15 @@ level as opposed to the AST.
 When applying this logic to static analysis, we'll see that SSA is used for more complex analysis where we need to
 determine the flow of the data. In contrast, AST will be used for simpler, more structure related analyses.
 
-### 2.6 Writing our analyzer!
+### 3.7 Writing our analyzer!
 In this section we'll implement an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
 https://github.com/ipfs/go-ipfs/issues/2043
+
+### 3.8 Congratulations
+You have a good understanding of what IR and SSA are, the SSA package used to create static code analyzers that 
+use it and how to write such analyzers.  
+
+In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/analysisApi/text.md)
+we'll focus on the analysis API. A package used define a common API for all code analyzers and to make writing analyses easier. 
+It also provides us an infrastructure that helps us with all the non-logic code such as loading, testing and running our
+analysis. 

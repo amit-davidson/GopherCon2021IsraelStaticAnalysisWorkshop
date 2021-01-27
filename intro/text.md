@@ -128,3 +128,9 @@ the program results. We can optimize away `x` and `y' which results in
 ```
 return 0;
 ```  
+
+### 1.3 Congratulations
+You now have a grasp about program analyzers and a good understanding of how compilers are built and work.
+
+In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ast/text.md) 
+we'll focus on the front end level, and see how analyzer "operating" in this level work 
