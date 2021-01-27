@@ -23,7 +23,7 @@ Humans can see that the first assignment is unnecessary and that the value of `y
 second assignment of `y`. In SSA form, both of these are immediate
 
 ### 2.3 SSA package members
-The package tools/go/ssa defines the representation of elements of Go programs in SSA format.
+The package `tools/go/ssa` defines the representation of elements of Go programs in SSA format.
 The key types form a hierarchical structure.
 
 Program - A Program is a partial or complete Go program converted to an SSA form.
@@ -50,7 +50,7 @@ Instruction - a statement that consumes values and performs computation. For exa
 
 <img src="https://i.imgur.com/DvheFlc.png" width="50%" height="50%" />
 
-Value - an expression that yields a value. For example, Function calls are both `Instruction` and `Value` since they both consume values and yield a value.
+Value - an expression that yields a value. For example, function calls are both `Instruction` and `Value` since they both consume values and yield a value.
 
 <img src="https://i.imgur.com/oJg97Re.png" width="50%" height="50%" />
 
@@ -90,7 +90,7 @@ func squareOrCircleArea(shapeType string) {
 }
 ```
 
-I'll focus on the `squareOrCircleArea` function, but you can inspect the full ssa program in the visualizer.
+I'll focus on the `squareOrCircleArea` function.
 ```go
 func squareOrCircleArea(shapeType string):
 0:                                                                entry P:0 S:2
@@ -112,8 +112,8 @@ func squareOrCircleArea(shapeType string):
 ```
 
 Looking at the first basic block (0) we can see straight away that the variable names were replaced with `t` followed by a number.
-Also, the assignment to `r` is missing and it's values are already used in the assignment to `area`. This is the result 
-of constant propagation and dead code elimination indicating this code is already optimized.
+Also, the assignment to `r` is missing and it's values are already used in the assignment to `area` (`t0`) in the first 
+line. This is the result of constant propagation and dead code elimination indicating this code is already optimized.
 
 In the end of the block, we can see a conditional goto (as opposed to the conventional if structure) to the correct
 basic block, according to the shape type.
@@ -159,9 +159,13 @@ the program and look at their SSA. I added comments with notes with explaining t
 
 
 ### 2.5 SSA vs AST
-AST shows us the structure of the code. How different statements in the code relate to each other. SSA, on the other hand, shows us how the code flows.
+AST shows us the structure of the code. How different statements in the code relate to each other. SSA, on the other
+hand, shows us how the code flows. That's why constant propagation analyzing values across the function is done on the IR
+level as opposed to the AST. 
 
-When applying this logic to static analysis, we'll see that SSA is used for more complex analysis where we need to determine the flow of the data. In contrast, AST will be used for simpler, more structure related analyses.
+When applying this logic to static analysis, we'll see that SSA is used for more complex analysis where we need to
+determine the flow of the data. In contrast, AST will be used for simpler, more structure related analyses.
 
 ### 2.6 Writing our analyzer!
+In this section we'll implement an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
 https://github.com/ipfs/go-ipfs/issues/2043
