@@ -66,7 +66,7 @@ We can use this  [SSA visualizer](http://golang-ssaview.herokuapp.com/)  to view
 > You can also use `go.tools/cmd/ssadump` in view SSA in your CLI
 
 Let's consider this program:
-```
+``` go
 package main
 
 import (

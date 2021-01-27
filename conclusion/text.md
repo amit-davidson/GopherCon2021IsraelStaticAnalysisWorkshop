@@ -5,7 +5,7 @@ Soundness and precision are two properties used to measure static analysis tools
 A static analysis tool is sound if it finds all of its occurrences in the code for a specific property to check. In other words, the fewer false negatives the static tool has, the more sound it is.
 
 Given the following program:
-```
+``` go
 r := 1
 if rand.Int() > 0.5 {
     r = 2

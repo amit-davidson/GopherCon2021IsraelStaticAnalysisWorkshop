@@ -4,7 +4,7 @@ The package defines an API for modular static analysis tools. In other words, it
       
 The primary type in the API is `analysis.Analyzer`.  It describes an analysis function: its name, documentation, flags, relationship to other analyzers, and of course, it's logic.
 
-```
+``` go
 type Analyzer struct {
    Name             string
    Doc              string
@@ -21,7 +21,7 @@ The `Name` and `Doc` are obvious. They are used to describe what the tool does.
 
 Another interesting field is the `Run` function. It contains the logic that should is executed upon a single package. It takes as an argument `*analysis.Pass` and returns a value to be used by other analyzers and an error.
 
-```
+``` go
 type Pass struct {
    Fset         *token.FileSet
    Files        []*ast.File
@@ -39,7 +39,7 @@ A `Pass` describes a single unit of work: the application of a particular `Analy
 
 The `Report` function emits a diagnostic, a message associated with a source position. For most analyses, diagnostics are their primary result. For convenience, `Pass` provides a helper method, `Reportf`, to report a new diagnostic by formatting a string. Diagnostic is defined as:
 
-```
+``` go
 type Diagnostic struct {
    Pos      token.Pos
    Category string // optional
@@ -70,7 +70,7 @@ So far, our code sat under `passes`  where each Analyzer had its own pass folder
 ### 1.3 Running our code
 inside `main.go`, we'll add the following code. 
 
-```
+``` go
 package main
 
 import (
@@ -88,7 +88,7 @@ If we wanted our command to run multiple analyzers, we would have to use `tools/
 The `analysistest` subpackage provides utilities for testing an Analyzer. Using `analysistest.Run`, it is possible to run an analyzer on a package of `testdata` files and check that it reported all the expected diagnostics.
 Expectations are expressed using "// want ..." comments in the input code, such as the following:
 
-```
+``` go
 package testdata  
   
 func main() {  
@@ -105,6 +105,6 @@ In this section, we'll convert our `ArgsOverwrite` Analyzer from earlier to the 
 We can run our analysis in 2 ways:
 1. Run it directly
 2. Using `go vet` with the following command: 
-```
+``` bash
 go vet -vettool=$(which analyzer name) path/to/files
 ```

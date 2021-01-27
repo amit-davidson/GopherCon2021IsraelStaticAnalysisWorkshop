@@ -11,18 +11,18 @@ ArgOverwritten finds function arguments being overwritten
 
 Download the package
 
-```
+``` bash
 go get github.com/amit-davidson/ArgOverwritten/cmd/argoverwritten
 ```
 
 Pass the entry point
 
-```
+``` bash
 go vet -vettool=$(which argoverwritten) ${path_to_file}
 ```
 
 ## Example:
-```
+``` go
 package testdata
 
 func body(a int) {
@@ -35,7 +35,7 @@ func main() {
 	body(5)
 }
 ```
-```
+``` bash
 go vet -vettool=$(which argoverwritten) /testdata/OverwritingParamFromOuterScope
 ```
 

@@ -14,7 +14,7 @@ The `scanner` package is fed with []byte representing the source code. Its outpu
 ### 1.2 What is AST?
 An abstract syntax tree (AST) is a way of representing the syntax of a programming language as a hierarchical tree-like structure. Let's take a look at the following program for an explanation.
 
-```
+``` go
 package main
 import "fmt"
 
@@ -167,7 +167,7 @@ type Object struct {
 }
 ```
 Where `Data` can be any of 
-```go
+```
 Kind    Data type         Data value
 Pkg     *Scope            package scope
 Con     int               iota for the respective declaration
@@ -185,7 +185,7 @@ the program and look at their AST. I added comments with notes with explaining t
 
 ### 1.4 Loading a program using the parser
 To load the program, we need to parse it first
-```
+``` go
 package main
 
 import (
@@ -252,16 +252,16 @@ Finally, we define a visitor function that will be called with each node inside 
 node. Then, we print our message and return false to indicate we're done searching and exit the traverse function.
 
 ```go
-	visitor := func(node ast.Node) bool {
-		strLit, ok := (node).(*ast.BasicLit)
-		if ok && strLit.Value == "\"hello world\"" {
-			pos := fset.Position(strLit.Pos())
-			fmt.Printf("We found hello world in pos:%d:%d", pos.Line, pos.Column)
-			return false
-		}
-		return true
-	}
-	ast.Inspect(f, visitor)
+visitor := func(node ast.Node) bool {
+    strLit, ok := (node).(*ast.BasicLit)
+    if ok && strLit.Value == "\"hello world\"" {
+        pos := fset.Position(strLit.Pos())
+        fmt.Printf("We found hello world in pos:%d:%d", pos.Line, pos.Column)
+        return false
+    }
+    return true
+}
+ast.Inspect(f, visitor)
 ```
 
 ### 1.5 Writing our first analyzer!
