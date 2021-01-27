@@ -1,15 +1,17 @@
 ## Compiler front end, AST, and analysis introduction
 ### 1.1 Go packages overview
-There are six relevant packages:
+There are six relevant packages regarding the compiler front end when talking about static analysis:
 
-- [token](https://golang.org/pkg/go/token/) - Package token defines constants representing the lexical tokens of Go
-- [scanner](https://golang.org/pkg/go/scanner/) - Package scanner implements a scanner for Go source text. It takes a []byte as the source, which can then be tokenized through repeated calls to the Scan method.
-- [parser](https://golang.org/pkg/go/parser/) - Package parser implements a parser for Go source files. The output is an abstract syntax tree (AST) representing the Go source
-- [AST](https://golang.org/pkg/go/ast/) - Package AST declares the types used to represent syntax trees for Go packages.
-- [constant](https://golang.org/pkg/go/constant/) - Package constant implements Values representing untyped Go constants and their corresponding operations.
+- [token](https://golang.org/pkg/go/token/) - Package `token` defines constants representing the lexical tokens of Go
+- [scanner](https://golang.org/pkg/go/scanner/) - Package `scanner` implements a scanner for Go source text. It takes a `[]byte` as the source, which can then be tokenized through repeated calls to the `Scan` method.
+- [parser](https://golang.org/pkg/go/parser/) - Package `parser` implements a parser for Go source files. The output is an abstract syntax tree (AST) representing the Go source
+- [AST](https://golang.org/pkg/go/ast/) - Package `AST` declares the types used to represent syntax trees for Go packages.
+- [constant](https://golang.org/pkg/go/constant/) - Package `constant` implements Values representing untyped Go constants and their corresponding operations.
 - [types](https://golang.org/pkg/go/types/) - Package `types` declares the data types and implements the algorithms for type-checking of Go packages
 
-The `scanner` package is fed with []byte representing the source code. Its output is a list of tokens defined by the token package, and the parser package uses them to create the AST tree. After the tree is constructed, the parser runs type-checking algorithms run over the tree, validates its correctness, and evaluates constants.
+The `scanner` package is fed with `[]byte` representing the source code. Its output is a list of tokens defined by the
+`token` package, and the parser package uses them to create the `AST` tree. After the tree is constructed,
+the parser runs type-checking algorithms run over the tree, validates its correctness, and evaluates constants.
 
 ### 1.2 What is AST?
 An abstract syntax tree (AST) is a way of representing the syntax of a programming language as a hierarchical tree-like structure. Let's take a look at the following program for an explanation.
@@ -112,7 +114,7 @@ We can use this [AST visualizer](http://goast.yuroyoro.net/) to view it's AST.
 ```
 
 Let's focus on the JSON under `*ast.File` representing a Go source file. The file is the root node, and it contains all
-the top-level declarations in the file - the import and the main function declarations. Under `mains'` body, we have a
+the top-level declarations in the file - the import and the main function. Under `mains'` body, we have a
 `blockStmt` containing a list of the function statements. Similar to HTML, the dependency of the nodes create a
 tree-like structure. 
 
@@ -126,7 +128,7 @@ Interfaces, concrete types, and others.
 
 - Concrete Types: The full list is [long](https://golang.org/pkg/go/ast/#ArrayType). Those are the tree nodes, and they contain values such as: `FuncDecl`, `IncDecStmt`, `Ident`, `Comment`, and so on.
 - Interfaces: `Node`, `Decl`, `Spec`, `Stmt`, `Expr`
-- Others: `Package`, `File`, `Scope`, `Object`. They do not fall to a specific category but rather 
+- Others: `Package`, `File`, `Scope`, `Object` 
 
 Well take a look at `AssignStmt`
 ```go
@@ -143,8 +145,8 @@ For example, in the expression: `a := 5`,
  - TokPos [3] (the position of the ":" character)
  - Tok [:=]
  
-Pretty straight forward. Now we'll look `Expr` which`AssignStmt` implements. Expression is common interface for 
-everything that returns a value.
+Pretty straight forward. Now we'll look at `Expr` which `AssignStmt` implements. `Expr` is common interface for 
+everything that returns a value. As you can see, it only contains the node interface (which is implemented by all the nodes on the AST graph).
 
 ```go
 type Expr interface {
@@ -152,9 +154,6 @@ type Expr interface {
     // contains filtered or unexported methods
 }
 ```
-
-As you can see, it only contains the node interface (which is implemented by all the nodes on the AST graph) and 
-serves as a common interface for all the expression nodes.
 
 From the other's group we'll look at `Object` which is the most complicated.
 ```go
@@ -174,14 +173,13 @@ Con     int               iota for the respective declaration
 ```
 
 An `ast.Object` describes a named entity created by a declaration such as a `var`, `type`, or `func` declarations. `ast.Object`
-isn't really an entity in the AST graph but a language representation, so it's doesn't implement the `node` 
-interface as well.
+isn't really an entity in the AST graph but a language representation, so it's doesn't implement the `node` interface.
 
 It's worth mentioning again that `AST` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
 
 ### Exercise:
-In the folder CodeExamples there are some interesting programs. Using our AST visualizer from earlier, take each of 
-the program and look at their AST. I added comments with notes with explaining the important points.   
+In the folder CodeExamples there are some interesting programs (well... AST-wise). Using our AST visualizer from earlier, take each of 
+the program and look at their AST. I added comments explaining the important points.   
 
 ### 1.4 Loading a program using the parser
 To load the program, we need to parse it first
@@ -235,7 +233,7 @@ fset := token.NewFileSet()
 
 Then, we call the `parser.ParseFile` function, providing it our `fileSet` to populate it, an empty path, a string as the
 source so the parser will use it instead of loading from a file, and a build mode - 0. In this example, we used 0 to 
-fully load the program, but any other mode can be used.
+fully load the program, but any other [mode](https://golang.org/pkg/go/parser/#Mode) can be used.
 
 ```go
 f, err := parser.ParseFile(fset, "", src, 0)  
@@ -249,7 +247,7 @@ f, err := parser.ParseFile(fset, "", src, 0)
 Finally, we define a visitor function that will be called with each node inside the AST. We pass our function to
 `ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the
 `Hello World` string literal with it's position in the code. We return `true` each iteration to keep traversing the tree until we found the desired 
-node. Then, we print our message and return false to indicate we're done searching and exit the traverse function.
+node. Then, we print our message and return false to indicate we're done searching and to exit the traverse function.
 
 ```go
 visitor := func(node ast.Node) bool {
