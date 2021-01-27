@@ -8,8 +8,17 @@ From Wikipedia:
    
    
 ### 1.1.2 Benefits of program analysis
-Program analysis can help detect bugs before they reach production. You've probably used them already and didn't even thought about it. A linter is used to flag styling errors, a profiler to find performance issues and aid in optimizing them, and even tests to validate program correctness. 
-      
+Program analysis can help detect bugs before they reach production. You've probably used them already and didn't even 
+thought about it. A linter is used to flag styling errors, a profiler to find performance issues and aid in optimizing
+them, and even tests to validate program correctness. 
+
+I've gathered a list of issues that could be solved using static analyses tools:
+
+- https://github.com/ipfs/go-ipfs/issues/2043 - Using `t.Fatal` inside a goroutine
+- https://github.com/golang/go/issues/23842 - Calling `waitgroup.Add` inside the calling a goroutine
+- https://github.com/cockroachdb/cockroach/issues/7972 - Deadlock
+- https://github.com/instana/go-sensor/issues/51 - race condition
+
 ### 1.1.3 Static analyses vs. Dynamic analyses
 
 > Program analysis can be performed without executing the program (static program analysis), during runtime (dynamic program analysis) or in a combination of both.
