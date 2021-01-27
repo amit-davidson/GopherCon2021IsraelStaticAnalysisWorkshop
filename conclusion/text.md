@@ -18,15 +18,20 @@ If we return the example from above, an imprecise analysis might say `r` is betw
 
 Precision and Soundness are a tradeoff. Having the ability to flag more cases makes the program more sound but might result in false positives. On the other way around, limiting the number of cases to cover makes the analysis more precise.
 
+When you'll write static analysis tools, you might encounter where this trade off comes into play, especially on IR level.
+Usually, it's easier to implement a more sounder analysis then a more precise one, so in reality, most of the tools go
+in this direction. 
+
 ## 1.2 Other tools
 There are famous built-in tools such as `go vet` and `go fmt`, but there are many more others:
 
 - `go fmt` - Gofmt formats Go programs. It uses tabs for indentation and blanks for alignment. Alignment assumes that an editor is using a fixed-width font.
-- `go vet` - Vet examines Go source code and reports suspicious constructs, such as Printf calls whose arguments do not align with the format string
+- `go vet` - Vet examines Go source code and reports suspicious constructs, such as `Printf` calls whose arguments do not align with the format string
 - `go imports` - The command go imports updates your Go import lines, adding missing ones and removing unreferenced ones.
 - `go fix` - Fix finds Go programs that use old APIs and rewrites them to use newer ones. After you update to a new Go release, fix helps make the necessary changes to your programs.
 
-There's also an awesome [list](https://github.com/golangci/awesome-go-linters) ofGo analysis tools from the go community. It contains tools from different categories you can integrate into your toolchain. 
+There's also an awesome (pun intended) [list](https://github.com/golangci/awesome-go-linters) of Go analysis tools written by the Go community.
+It contains tools you can integrate into your toolchain. 
    
 [staticcheck](https://github.com/dominikh/go-tools) and [golanglint-ci](https://github.com/golangci/golangci-lint) are some of the more noteable tools. 
 - staticcheck is similar to `go vet` but applies many more checks such as forgetting to `unlock` a `mutex` using the defer statement, validating JSON tags correctness, and so on.
@@ -34,8 +39,8 @@ There's also an awesome [list](https://github.com/golangci/awesome-go-linters) o
 - golanglint-ci is a fast Go linters runner. It runs linters in parallel, uses caching, supports `yaml` config, has integrations with all major IDE, and has dozens of linters included. You can look at the full list of linters [here](https://golangci-lint.run/usage/linters/).
 
 ### 1.3 Further reading:
-- A deeper dive into the topics we talked about in the AST part in Go - https://github.com/golang/example/tree/master/gotypes  
+- A deeper dive into the topics of the AST part in Go - https://github.com/golang/example/tree/master/gotypes  
 - A deeper dive into SSA in GO- https://www.youtube.com/watch?v=uTMvKVma5ms&ab_channel=GopherAcademy
 
-### 1.4 Dicussion
+### 1.4 Discussion
    Any questions?
