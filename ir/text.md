@@ -67,9 +67,16 @@ And when combined:
 The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primitives like `MakeChan` and `Alloc`. 
 
 ### 3.4 Viewing SSA
-We can use this  [SSA visualizer](http://golang-ssaview.herokuapp.com/)  to view the SSA form of programs.
-
-> You can also use `go.tools/cmd/ssadump` in view SSA in your CLI
+We can `ssadump` to view the SSA form of programs.
+```bash
+go get -u golang.org/x/tools/cmd/ssadump
+ssadump -build=FI ./ir/CodeExamples/Channel/
+ssadump -build=FI ./ir/CodeExamples/ElseIf/
+```
+We use the `F` to print the SSA code, and `I` to ignore `init` function.
+> You can also use this [SSA visualizer](http://golang-ssaview.herokuapp.com/) in view SSA in your CLI. For this example,
+> I chose not to, since it it uses a different [build mode](https://pkg.go.dev/golang.org/x/tools/go/ssa#BuilderMode) then 
+> the one we need.
 
 Let's consider this program:
 ``` go
