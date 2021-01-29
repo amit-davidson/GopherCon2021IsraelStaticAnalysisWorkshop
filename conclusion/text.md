@@ -42,6 +42,7 @@ It contains tools you can integrate into your toolchain.
 - A deeper dive into the topics of the AST part in Go - https://github.com/golang/example/tree/master/gotypes  
 - A deeper dive into SSA in GO- https://www.youtube.com/watch?v=uTMvKVma5ms&ab_channel=GopherAcademy
 - A viewer used to look at the code at different phases of the compilation process - https://golang.design/gossa
+- More builtin package about static coed analysis we didn't cover - https://pkg.go.dev/golang.org/x/tools
 
 ### 5.4 Discussion
    Any questions?
