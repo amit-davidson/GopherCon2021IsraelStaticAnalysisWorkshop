@@ -16,7 +16,10 @@ An unsound analysis will result in `r=1` ignoring the possible value of `2`, whe
 Precision is the ability of a static analysis tool to flag only the property we're interested in. As previously, the fewer false positives, the more the tool is precise.
 If we return the example from above, an imprecise analysis might say `r` is between `0` and `100`, where a precise analysis will say `r` is only `1` or `2`.
 
-Precision and Soundness are a tradeoff. Having the ability to flag more cases makes the program more sound but might result in false positives. On the other way around, limiting the number of cases to cover makes the analysis more precise.
+Precision, Soundness and computing resources are tradeoff. Having the ability to flag more cases makes the program more 
+sound but might result in false positives. On the other way around, limiting the number of cases to cover makes the
+analysis more precise. And choosing to go in either direction results in an increased amount of computing resources such 
+as memory and time.
 
 When you'll write static analysis tools, you might encounter where this trade off comes into play, especially on IR level.
 Usually, it's easier to implement a more sounder analysis then a more precise one, so in reality, most of the tools go
@@ -33,10 +36,11 @@ There are famous built-in tools such as `go vet` and `go fmt`, but there are man
 There's also an awesome (pun intended) [list](https://github.com/golangci/awesome-go-linters) of Go analysis tools written by the Go community.
 It contains tools you can integrate into your toolchain. 
    
-[staticcheck](https://github.com/dominikh/go-tools) and [golanglint-ci](https://github.com/golangci/golangci-lint) are some of the more noteable tools. 
-- staticcheck is similar to `go vet` but applies many more checks such as forgetting to `unlock` a `mutex` using the defer statement, validating JSON tags correctness, and so on.
+- [staticcheck](https://github.com/dominikh/go-tools) is similar to `go vet` but applies many more checks such as forgetting to `unlock` a `mutex` using the defer statement, validating JSON tags correctness, and so on.
 
-- golanglint-ci is a fast Go linters runner. It runs linters in parallel, uses caching, supports `yaml` config, has integrations with all major IDE, and has dozens of linters included. You can look at the full list of linters [here](https://golangci-lint.run/usage/linters/).
+- [golanglint-ci](https://github.com/golangci/golangci-lint) is a fast Go linters runner. It runs linters in parallel, uses caching, supports `yaml` config, has integrations with all major IDE, and has dozens of linters included. You can look at the full list of linters [here](https://golangci-lint.run/usage/linters/).
+
+- [Chronos](https://github.com/amit-davidson/Chronos) a static race detector I built
 
 ### 5.3 Further reading:
 - A deeper dive into the topics of the AST part in Go - https://github.com/golang/example/tree/master/gotypes  
