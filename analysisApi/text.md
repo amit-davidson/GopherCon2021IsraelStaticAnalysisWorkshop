@@ -18,7 +18,17 @@ type Analyzer struct {
 
 The `Name` and `Doc` are obvious. They are used to describe what the tool does.
 
-Another interesting field is the `Run` function. It contains the logic that should is executed upon a single package. It takes as an argument `*analysis.Pass` and returns a value to be used by other analyzers and an error.
+Another interesting is the `Requires` field. It specifies a list of analyses upon which this one depends and whose
+results it may access, and it constrains the order in which a driver may run analyses.
+
+> To use SSA in the analysis api, we would have to require the [SSA builder](https://pkg.go.dev/golang.org/x/tools/go/analysis/passes/buildssa)
+>  `Requires: []*analysis.Analyzer {
+                  buildssa.Analyzer
+          }`
+
+
+The most important one is the `Run` function. It contains the logic that should is executed upon a single package. 
+It takes as an argument `*analysis.Pass` and returns a value to be used by other analyzers and an error.
 
 ``` go
 type Pass struct {
