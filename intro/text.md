@@ -67,14 +67,14 @@ converts a sequence of characters into a sequence of tokens. A token is a pair c
 #### Parsing 
 This involves parsing the token sequence to identify the program. This phase builds a parse tree or an abstract syntax tree, which replaces the linear sequence of tokens with a tree structure.
 
+<img src="https://i.imgur.com/biUHNJq.png" height="50%" width="50%"/>
+
 #### Semantic Analysis 
 This phase performs checks such as type checking and rejecting incorrect programs. It also constructs the symbol table used to map between identifiers and information relating to their declaration or appearance in the source.
 
 By looking at all the steps, we can see how they come together, and a tree representation of the code is built from source.
 
 <img src="https://i.imgur.com/muZGoQt.png" height="70%" width="70%"/>
-
-<img src="https://i.imgur.com/biUHNJq.png" height="50%" width="50%"/>
 
 ### 1.2.3 Middle end
 The middle end part performs optimizations regardless of the source code language and the target machine.
