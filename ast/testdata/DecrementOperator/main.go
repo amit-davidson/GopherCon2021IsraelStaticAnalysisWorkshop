@@ -12,6 +12,7 @@ func retry(fn func() error, retries int) error {
 		return nil
 	}
 }
+
 func main() {
 	_ = retry(func() error {
 		return nil

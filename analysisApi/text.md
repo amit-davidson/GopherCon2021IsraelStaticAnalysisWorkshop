@@ -96,6 +96,13 @@ Analyzers are provided in the form of packages that a driver program is expected
 The [`singlechecker`](https://pkg.go.dev/golang.org/x/tools/go/analysis/singlechecker) package provides the `main` function for a command that runs one Analyzer. By convention, each Analyzer should be accompanied by a singlechecker-based command defined in its entirety as: This code calls our Analyzer. 
 If we wanted our command to run multiple analyzers, we would have to use [`multichecker`](https://pkg.go.dev/golang.org/x/tools/go/analysis/multichecker).
 
+Now we can run it using 
+``` bash
+go install path/to/analyzer
+go vet -vettool=$(which analyzername) path/to/files
+```
+
+
 ### 4.4 Testing our code
 The [`analysistest`](https://godoc.org/golang.org/x/tools/go/analysis/analysistes) subpackage provides utilities for testing an Analyzer. Using `analysistest.Run`, it is possible to run an analyzer on a package of `testdata` files and check that it reported all the expected diagnostics.
 Expectations are expressed using "// want ..." comments in the input code, such as the following:
@@ -110,18 +117,10 @@ func main() {
 }
 ```
 
-### 4.5 Integrating it as part of our toolchain. 
-We can run our analysis in 2 ways:
-1. Run it directly
-2. Using `go vet` with the following command: 
-``` bash
-go vet -vettool=$(which analyzer name) path/to/files
-```
-
-### 4.6 Implementing a code analyzer using the analysis api.   
+### 4.5 Implementing a code analyzer using the analysis api.   
 In this section, we'll convert our `ArgsOverwrite` Analyzer from earlier to the analysis API
 
-### 4.7 Congratulations
+### 4.6 Congratulations
 You have a good understanding of what the analysis API is and how to use it help us in writing analyses in the future.
 
 In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/conclusion/text.md)
