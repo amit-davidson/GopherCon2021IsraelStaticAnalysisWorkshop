@@ -12,24 +12,24 @@ Program analysis can help detect bugs before they reach production. You've proba
 thought about it. A linter is used to flag styling errors, a profiler to find performance issues and aid in optimizing
 them, and even tests to validate program correctness. 
 
-I've gathered a list of issues that could be solved using static analyses tools:
+I've gathered a list of issues that could be solved using static analysis tools:
 
 - https://github.com/ipfs/go-ipfs/issues/2043 - Using `t.Fatal` inside a goroutine
 - https://github.com/golang/go/issues/23842 - Calling `waitgroup.Add` inside the calling a goroutine
 - https://github.com/cockroachdb/cockroach/issues/7972 - Deadlock
 - https://github.com/instana/go-sensor/issues/51 - race condition
 
-### 1.1.3 Static analyses vs. Dynamic analyses
+### 1.1.3 Static analysis vs. Dynamic analysis
 
 > Program analysis can be performed without executing the program (static program analysis), during runtime (dynamic program analysis) or in a combination of both.
 
-The obvious difference between static and dynamic analyses is that dynamic is performed at runtime, whereas static works without running it.
+The obvious difference between static and dynamic analysis is that dynamic is performed at runtime, whereas static works without running it.
 
-In practice, the difference is much more apparent. The main benefit of dynamic code analysis is that it finds bugs that can actually occur. Also, they are usually easier to write and require fewer resources to run. The problem with dynamic code analyses is that they make the code run slower (I'm looking at you `go race`), which might be intolerant in production. 
+In practice, the difference is much more apparent. The main benefit of dynamic code analysis is that it finds bugs that can actually occur. Also, they are usually easier to write and require fewer resources to run. The problem with dynamic code analysis is that they make the code run slower (I'm looking at you `go race`), which might be intolerant in production. 
 
-On the other hand, static analyses can also find bugs **that may**/**before they** occur. The reason is that static
-analyses can evaluate paths of the code or workloads that don't often happen in production. 
-Evaluating all the possibilities comes at the expanse of the time and resources required to perform analyses and
+On the other hand, static analysis can also find bugs **that may**/**before they** occur. The reason is that static
+analysis can evaluate paths of the code or workloads that don't often happen in production. 
+Evaluating all the possibilities comes at the expanse of the time and resources required to perform analysis and
 inaccuracy of the final result.
 
 ## 1.2 Compilers
@@ -78,7 +78,7 @@ By looking at all the steps, we can see how they come together, and a tree repre
 
 ### 1.2.3 Middle end
 The middle end part performs optimizations regardless of the source code language and the target machine.
-As opposed to the front end phase, the middle end analyses are more complex. By estimating how the data will flow through
+As opposed to the front end phase, the middle end analysis is more complex. By estimating how the data will flow through
 the code, the compiler does optimizations ranging from the scope of a function to the entire program (interprocedural).
 
 I'll demonstrate an optimization using Constant Propagation mentioned earlier. Constant propagation is the process of substituting the values of known
