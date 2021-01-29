@@ -15,7 +15,7 @@ You will also learn about the analysis API making writing analyzers easier and t
 
 ### Contents:
 1. [Introduction to compilers and static analysis](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/intro/text.md)
-2. [Compiler front end, AST, and analysis introduction](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ast/text.md)
+2. [Compiler front end and AST](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ast/text.md)
 3. [Compiler middle end and SSA](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/text.md)
 3. [The analysis API](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/analysisApi/text.md)
 3. [Conclusion](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/conclusion/text.md)
