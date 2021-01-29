@@ -231,6 +231,8 @@ in which file a statement is, given its position.
 fset := token.NewFileSet()  
 ```
 
+<img src="https://i.imgur.com/AQfkL3E.png" height="50%" width="50%"/>
+
 Then, we call the `parser.ParseFile` function, providing it our `fileSet` to populate it, an empty path, a string as the
 source so the parser will use it instead of loading from a file, and a build mode - 0. In this example, we used 0 to 
 fully load the program, but any other [mode](https://golang.org/pkg/go/parser/#Mode) can be used.
