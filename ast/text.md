@@ -178,7 +178,7 @@ isn't really an entity in the AST graph but a language representation, so it's d
 It's worth mentioning again that `AST` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
 
 ### 2.4 Exercise:
-In the folder CodeExamples there are some interesting programs (well... AST-wise). Using our AST visualizer from earlier, take each of 
+In the folder `/ast/CodeExamples` there are some interesting programs (well... AST-wise). Using our AST visualizer from earlier, take each of 
 the program and look at their AST. I added comments explaining the important points.   
 
 ### 2.5 Loading a program using the parser
