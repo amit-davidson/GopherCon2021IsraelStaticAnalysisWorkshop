@@ -70,7 +70,15 @@ This involves parsing the token sequence to identify the program. This phase bui
 <img src="https://i.imgur.com/biUHNJq.png" height="50%" width="50%"/>
 
 #### Semantic Analysis 
-This phase performs checks such as type checking and rejecting incorrect programs. It also constructs the symbol table used to map between identifiers and information relating to their declaration or appearance in the source.
+This phase performs checks such as type checking and rejecting incorrect programs. It also constructs the symbol table
+used to map between identifiers and information relating to their declaration or appearance in the source.
+
+For the given code, the type of the variable `n` is inferred in the semantic analysis phase, marking it as `int`
+``` go
+n := 50 + 70
+```
+
+
 
 By looking at all the steps, we can see how they come together, and a tree representation of the code is built from source.
 
