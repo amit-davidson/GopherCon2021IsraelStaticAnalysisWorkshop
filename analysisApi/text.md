@@ -9,12 +9,10 @@ The primary type in the API is `analysis.Analyzer`.  It describes an analysis fu
 type Analyzer struct {
    Name             string
    Doc              string
-   Flags            flag.FlagSet
-   Run              func(*Pass) (interface{}, error)
-   RunDespiteErrors bool
-   ResultType       reflect.Type
    Requires         []*Analyzer
-   FactTypes        []Fact
+   Run              func(*Pass) (interface{}, error)
+ 
+   ...
 }
 ```
 
@@ -26,12 +24,10 @@ Another interesting field is the `Run` function. It contains the logic that shou
 type Pass struct {
    Fset         *token.FileSet
    Files        []*ast.File
-   OtherFiles   []string
-   IgnoredFiles []string
    Pkg          *types.Package
    TypesInfo    *types.Info
-   ResultOf     map[*Analyzer]interface{}
    Report       func(Diagnostic)
+
    ...
 }
 ```
