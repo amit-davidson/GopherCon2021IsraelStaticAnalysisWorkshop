@@ -85,7 +85,7 @@ func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
 		return true
 	}
 	for _, f := range p.Files {
-		_, err := conf.Check("fib", fset, []*ast.File{f}, info)
+		_, err := conf.Check("", fset, []*ast.File{f}, info)
 		if err != nil {
 			log.Fatal(err)
 		}
