@@ -155,25 +155,23 @@ type Expr interface {
 }
 ```
 
-From the other's group we'll look at `Object` which is the most complicated.
+From the other's group we'll look at `File`.
 ```go
-type Object struct {
-    Kind ObjKind
-    Name string      // declared name
-    Decl interface{} // corresponding Field, XxxSpec, FuncDecl, LabeledStmt, AssignStmt, Scope; or nil
-    Data interface{} // object-specific data; or nil
-    Type interface{} // placeholder for type information; may be nil
+type File struct {
+    Doc        *CommentGroup   // associated documentation; or nil
+    Package    token.Pos       // position of "package" keyword
+    Name       *Ident          // package name
+    Decls      []Decl          // top-level declarations; or nil
+    Scope      *Scope          // package scope (this file only)
+    Imports    []*ImportSpec   // imports in this file
+    Unresolved []*Ident        // unresolved identifiers in this file
+    Comments   []*CommentGroup // list of all comments in the source file
 }
-```
-Where `Data` can be any of 
-```
-Kind    Data type         Data value
-Pkg     *Scope            package scope
-Con     int               iota for the respective declaration
+
 ```
 
-An `ast.Object` describes a named entity created by a declaration such as a `var`, `type`, or `func` declarations. `ast.Object`
-isn't really an entity in the AST graph but a language representation, so it's doesn't implement the `node` interface.
+An `ast.File` is the root node of each of the files we analyze. When analyzing a program, we'll iterate over the files 
+and for each we'll pass it to the `ast.Inspect` function for iteration.   
 
 It's worth mentioning again that `AST` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
 
