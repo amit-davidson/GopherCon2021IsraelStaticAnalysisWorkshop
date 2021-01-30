@@ -51,6 +51,7 @@ func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
 	var info *types.Info
 	var err error
 	outputs := make([]string, 0)
+
 	visitor := func(node ast.Node) bool {
 		var typ *ast.FuncType
 		var body *ast.BlockStmt
