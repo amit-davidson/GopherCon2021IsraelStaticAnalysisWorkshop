@@ -35,12 +35,21 @@ func loadProgram(path string) (*token.FileSet, map[string]*ast.Package, error) {
 	return fset, pkgs, nil
 }
 
-func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
-	conf := types.Config{Importer: importer.Default()}
+func populateTypes(conf types.Config, fset *token.FileSet, f *ast.File) (*types.Info, error) {
 	info := &types.Info{
 		Defs: make(map[*ast.Ident]types.Object),
 		Uses: make(map[*ast.Ident]types.Object),
 	}
+	_, err := conf.Check("", fset, []*ast.File{f}, info)
+	if err != nil {
+		return nil, err
+	}
+	return info, nil
+}
+
+func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
+	var info *types.Info
+	var err error
 	outputs := make([]string, 0)
 	visitor := func(node ast.Node) bool {
 		var typ *ast.FuncType
@@ -84,8 +93,10 @@ func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
 		}
 		return true
 	}
+
+	conf := types.Config{Importer: importer.Default()}
 	for _, f := range p.Files {
-		_, err := conf.Check("", fset, []*ast.File{f}, info)
+		info, err = populateTypes(conf, fset, f)
 		if err != nil {
 			log.Fatal(err)
 		}
