@@ -1,14 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"golang.org/x/tools/go/analysis/analysistest"
-	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -29,7 +27,7 @@ func Test_analyzePackage(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			path := fmt.Sprintf("%s%s%s", analysistest.TestData(), string(os.PathSeparator), tc.name)
+			path := filepath.Join(".", "testdata", tc.name, "main.go")
 			fset := token.NewFileSet()
 			pkgs, err := parser.ParseDir(fset, path, nil, 0)
 			require.NoError(t, err)
