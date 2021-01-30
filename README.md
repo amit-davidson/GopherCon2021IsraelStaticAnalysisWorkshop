@@ -13,6 +13,13 @@ I will start the lecture by giving an overview of static analyzers and how compi
 about 2 different representations of the code (AST and SSA), and write an analyzer in each of those. 
 You will also learn about the analysis API making writing analyzers easier and then we'll finish with a discussion.
 
+### Requirements:
+[Go tools](https://github.com/golang/tools):
+```bash
+go get -u golang.org/x/tools/...
+```
+
+
 ### Contents:
 1. [Introduction to compilers and static analysis](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/intro/text.md)
 2. [Compiler front end and AST](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ast/text.md)
