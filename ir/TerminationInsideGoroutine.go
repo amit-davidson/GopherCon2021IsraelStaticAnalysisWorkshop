@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/go-tools/go/types/typeutil"
 	"go/token"
 	"go/types"
 	"golang.org/x/tools/go/packages"
@@ -74,7 +73,7 @@ func checkTerminationInsideGoroutine(fn *ssa.Function, fset *token.FileSet) stri
 					if recv == nil {
 						continue
 					}
-					if !typeutil.IsType(recv.Type(), "*testing.common") {
+					if types.TypeString(recv.Type(), nil) != "*testing.common" {
 						continue
 					}
 					terminateFn, ok := call.Call.StaticCallee().Object().(*types.Func)

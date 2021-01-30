@@ -15,7 +15,7 @@ func Test_analyzePackage(t *testing.T) {
 		name   string
 		result []string
 	}{
-		{name: "SimpleRecursionFlag", result: []string{"\"body\" overwrites func parameter in pos"}},
+		{name: "SimpleOverwriting", result: []string{"\"body\" overwrites func parameter in pos"}},
 		{name: "AnonymousFunction", result: []string{"\"a\" overwrites func parameter in pos"}},
 		{name: "OverwritingParamFromOuterScope", result: []string{"\"a\" overwrites func parameter in pos"}},
 		{name: "AssigningParamToAVariableFirst", result: []string{}},
@@ -27,7 +27,7 @@ func Test_analyzePackage(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			path := filepath.Join(".", "testdata", tc.name, "main.go")
+			path := filepath.Join(".", "testdata", tc.name)
 			fset := token.NewFileSet()
 			pkgs, err := parser.ParseDir(fset, path, nil, 0)
 			require.NoError(t, err)
