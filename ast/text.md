@@ -262,7 +262,13 @@ visitor := func(node ast.Node) bool {
 ast.Inspect(f, visitor)
 ```
 
-### 2.6 Writing our first analyzer!
+### 2.6 Exercise 2!
+In the file ast/ArgsOverwriteAnalyzer.go we have an analyzer that checks if function arguments were modified as in the 
+example below. The problem is that there are some parts missing from it. There are comments in the places where you
+should add your code according to the comment. You can run the tests ast/ArgsOverwriteAnalyzer_test.go to make sure your
+tests pass. You can also debug using the test to inspect the AST graph of this program.
+If you give up, you can see the result in ast/result/ArgsOverwriteAnalyzer.go :)
+
 
 ### 2.7 Congratulations
 You have a good understanding of what AST is, the different Go packages used to create static code analyzers that 
