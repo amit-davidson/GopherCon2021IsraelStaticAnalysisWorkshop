@@ -62,9 +62,6 @@ func checkTerminationInsideGoroutine(fn *ssa.Function, fset *token.FileSet) stri
 					if !ok {
 						continue
 					}
-					if call.Call.IsInvoke() {
-						continue
-					}
 					callee := call.Call.StaticCallee()
 					if callee == nil {
 						continue
