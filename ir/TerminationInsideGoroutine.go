@@ -44,13 +44,8 @@ func checkTerminationInsideGoroutine(fn *ssa.Function, fset *token.FileSet) stri
 			if !ok {
 				continue
 			}
-			var gofn *ssa.Function
-			switch val := gostmt.Call.Value.(type) {
-			case *ssa.Function:
-				gofn = val
-			case *ssa.MakeClosure:
-				gofn = val.Fn.(*ssa.Function)
-			default:
+			gofn := gostmt.Call.StaticCallee()
+			if gofn == nil {
 				continue
 			}
 			if gofn.Blocks == nil {
