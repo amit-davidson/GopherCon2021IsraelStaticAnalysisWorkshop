@@ -176,7 +176,8 @@ and for each we'll pass it to the `ast.Inspect` function for iteration.
 It's worth mentioning again that `ast` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
 
 ### 2.4 Exercise:
-In the folder `/ast/CodeExamples` there are some interesting programs (well... AST-wise). Using our [AST visualizer](http://goast.yuroyoro.net/)
+In the folder [`/ast/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/ast/CodeExamples)
+there are some interesting programs (well... AST-wise). Using our [AST visualizer](http://goast.yuroyoro.net/)
 from earlier, take each of the program and look at their AST. I added comments explaining the important points.   
 
 ### 2.5 Loading a program using the parser
@@ -263,11 +264,13 @@ ast.Inspect(f, visitor)
 ```
 
 ### 2.6 Exercise 2!
-In the file `ast/ArgsOverwriteAnalyzer.go` we have an analyzer that checks if function arguments were modified as in the 
-example below. The problem is that there are some parts missing from it. There are comments in the places where you
-should add your code according to the comment. You can run the tests `ast/ArgsOverwriteAnalyzer_test.go` to make sure your
-tests pass. You can also debug using the test to inspect the AST graph of this program.
-If you give up, you can see the result in `ast/result/ArgsOverwriteAnalyzer.go` :)
+In the file [`ast/ArgsOverwriteAnalyzer.go`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ast/ArgsOverwriteAnalyzer.go)
+we have an analyzer that checks if function arguments were modified as in the example below. The problem is that there
+are some parts missing from it. There are comments in the places where you should add your code according to the comment.
+You can run the tests [`ast/ArgsOverwriteAnalyzer_test.go`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ast/ArgsOverwriteAnalyzer_test.go)
+to make sure your tests pass. You can also debug using the test to inspect the AST graph of this program.
+
+If you give up, you can see the result in [`ast/result/ArgsOverwriteAnalyzer.go`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ast/result/ArgsOverwriteAnalyzer.go) :)
 
 
 ### 2.7 Congratulations
