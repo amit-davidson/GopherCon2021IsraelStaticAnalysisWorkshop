@@ -279,5 +279,5 @@ If you give up, you can see the result in [`CompilerFrontEndASTInGo/result/ArgsO
 You have a good understanding of what AST is, the different Go packages used to create static code analyzers that 
 interact with it and how to write such analyzers.  
 
-In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/text.md) 
+In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/README.md) 
 we'll focus on the middle end level, and see how analyzer "operating" in this level work.

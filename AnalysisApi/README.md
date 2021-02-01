@@ -134,6 +134,6 @@ In this section, we'll convert our `ArgsOverwrite` Analyzer from earlier to the 
 ### 4.7 Congratulations
 You have a good understanding of what the analysis API is and how to use it help us in writing analyses in the future.
 
-In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/conclusion/text.md)
+In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/conclusion/README.md)
 we'll conclude this workshop by touching a point regarding static code analyzers in general and take a look at other code
 analyzers written by the Go community.  

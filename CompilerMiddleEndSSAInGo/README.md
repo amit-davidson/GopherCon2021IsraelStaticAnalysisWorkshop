@@ -193,7 +193,7 @@ https://github.com/ipfs/go-ipfs/issues/2043
 You have a good understanding of what IR and SSA are, the SSA package used to create static code analyzers that 
 use it and how to write such analyzers.  
 
-In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/analysisApi/text.md)
+In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/analysisApi/README.md)
 we'll focus on the analysis API. A package used define a common API for all code analyzers and to make writing analyses easier. 
 It also provides us an infrastructure that helps us with all the non-logic code such as loading, testing and running our
 analysis. 
