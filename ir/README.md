@@ -49,7 +49,7 @@ BasicBlock represents an SSA basic block. A set of instructions that are execute
 Control Flow Graph (CFG) - In a control-flow graph, each node in the graph represents a basic block.
 Together, they compose all paths that might be traversed through a program during its execution.
 
-<img src="https://i.imgur.com/xjzOCfb.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/xjzOCfb.png" width="70%" height="70%" />
 
 #### [Instruction](https://pkg.go.dev/golang.org/x/tools/go/ssa#Instruction)
 a statement that consumes values and performs computation. For example, `Call`, `Return`, `TypeAssert`, etc
@@ -175,7 +175,7 @@ and then [`ir/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon20
 
 
 ### 3.6 SSA vs AST
-The most important difference is that AST reasons about the the structure of the code, where SSA reasons about the data 
+The most important difference is that AST reasons about the structure of the code, where SSA reasons about how data 
 flows in the code.
 
 We can summarize the differences using the following table:
