@@ -1,8 +1,19 @@
 ## 4 Analysis API:
 ### 4.1 tools/go/analysis
-The package defines an API for modular static analysis tools. In other words, it's a common interface for all static code analyzers.
+The package defines an API for modular static analysis tools. In other words, it's a common interface for all static 
+code analyzers.
 
-      
+Why should you care? What's the difference between using the analysis API, and the way we wrote so far?
+The analysis API makes writing analyses easier by taking care of:
+ - file parsing
+ - testing
+ - integration with go vet
+ - many more
+ 
+Also, it enforces a single pattern for all the static analysis tools such as how analysis are structured and how 
+warnings are reported
+    
+### 4.2 analysis members  
 The primary type in the API is `analysis.Analyzer`.  It describes an analysis function: its name, documentation, flags, relationship to other analyzers, and of course, it's logic.
 
 ``` go
@@ -54,7 +65,7 @@ type Diagnostic struct {
 }
 ```
 
-### 4.2 How to use it
+### 4.3 How to use it
 First let's define the project structure:
 ```
 │── README.md
@@ -79,7 +90,7 @@ part will be taken care of by the analysis API so we can ignore it.
 
 Next , we need a way to run the Analyzer and to test it.
 
-### 4.3 Running our code
+### 4.4 Running our code
 inside `main.go`, we'll add the following code. 
 
 ``` go
@@ -103,7 +114,7 @@ go vet -vettool=$(which analyzername) path/to/files
 ```
 
 
-### 4.4 Testing our code
+### 4.5 Testing our code
 The [`analysistest`](https://godoc.org/golang.org/x/tools/go/analysis/analysistes) subpackage provides utilities for testing an Analyzer. Using `analysistest.Run`, it is possible to run an analyzer on a package of `testdata` files and check that it reported all the expected diagnostics.
 Expectations are expressed using "// want ..." comments in the input code, such as the following:
 
@@ -117,10 +128,10 @@ func main() {
 }
 ```
 
-### 4.5 Implementing a code analyzer using the analysis api.   
+### 4.6 Implementing a code analyzer using the analysis api.   
 In this section, we'll convert our `ArgsOverwrite` Analyzer from earlier to the analysis API
 
-### 4.6 Congratulations
+### 4.7 Congratulations
 You have a good understanding of what the analysis API is and how to use it help us in writing analyses in the future.
 
 In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/conclusion/text.md)
