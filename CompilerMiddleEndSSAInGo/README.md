@@ -71,8 +71,8 @@ The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#
 We can `ssadump` to view the SSA form of programs.
 ```bash
 go get -u golang.org/x/tools/cmd/ssadump
-ssadump -build=FI ./ir/CodeExamples/Channel/
-ssadump -build=FI ./ir/CodeExamples/ElseIf/
+ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/Channel/
+ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/ElseIf/
 ```
 We use the `F` to print the SSA code, and `I` to ignore `init` function.
 > You can also use this [SSA visualizer](http://golang-ssaview.herokuapp.com/) in view SSA in your CLI. For this example,
@@ -168,10 +168,10 @@ our `float64` to the `interface{}` type and only then pass it to the function.
 ```
 
 ### 3.5 Exercise
-In the folder [`ir/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/ir/CodeExamples)
+In the folder [`CompilerMiddleEndSSAInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/ir/CodeExamples)
 there are some interesting programs. Using our SSA visualizer from earlier, take each of the program and look at their SSA.
-I added comments with notes with explaining the important points. You should start first with [`ir/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/Map/Map.go)
-and then [`ir/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/ElseIf/ElseIf.go) 
+I added comments with notes with explaining the important points. You should start first with [`CompilerMiddleEndSSAInGo/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/Map/Map.go)
+and then [`CompilerMiddleEndSSAInGo/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/ElseIf/ElseIf.go) 
 
 
 ### 3.6 SSA vs AST
