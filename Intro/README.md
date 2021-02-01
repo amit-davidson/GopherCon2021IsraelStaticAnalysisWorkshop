@@ -51,9 +51,10 @@ The front end transforms the input program into an intermediate representation (
 <img src="https://i.imgur.com/B7ynZWe.png" height="80%" width="80%"/>
 
 ### 1.2.2 Frontend
-Most commonly today, the frontend is broken into three phases: lexical analysis (also known as lexing or scanning), syntax analysis (also known as scanning or parsing), and semantic analysis.
+Most commonly today, the frontend is broken into three phases: lexical analysis (also known as tokenizing or scanning),
+syntax analysis (also known as scanning or parsing), and semantic analysis.
 
-#### Lexing 
+#### Tokenizing 
 converts a sequence of characters into a sequence of tokens. A token is a pair consisting of a token name and token value.
 
 | Token name | Sample token values              |
@@ -82,7 +83,7 @@ n := 50 + 70
 
 By looking at all the steps, we can see how they come together, and a tree representation of the code is built from source.
 
-<img src="https://i.imgur.com/8sHsDua.png" height="70%" width="70%"/>
+<img src="https://i.imgur.com/wD5Rz5f.png" height="70%" width="70%"/>
 
 ### 1.2.3 Middle end
 The middle end part performs optimizations regardless of the source code language and the target machine.

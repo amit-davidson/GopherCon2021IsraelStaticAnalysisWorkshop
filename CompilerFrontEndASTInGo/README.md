@@ -13,6 +13,8 @@ The `scanner` package is fed with `[]byte` representing the source code. Its out
 `token` package, and the parser package uses them to create the `AST` tree. After the tree is constructed,
 the parser runs type-checking algorithms run over the tree, validates its correctness, and evaluates constants.
 
+<img src="https://i.imgur.com/hVPefPe.png" height="50%" width="50%"/>
+
 ### 2.2 What is AST?
 An abstract syntax tree (AST) is a way of representing the syntax of a programming language as a hierarchical tree-like structure. Let's take a look at the following program for an explanation.
 
