@@ -38,7 +38,6 @@ func Test_analyzePackage(t *testing.T) {
 			}
 
 			outputs := analyzePackage(testPkg, fset)
-			require.NotNil(t, outputs)
 			assert.Len(t, outputs, len(tc.result))
 			for i := range outputs {
 				assert.Contains(t, outputs[i], tc.result[i])

@@ -178,7 +178,9 @@ It's worth mentioning again that `ast` package contains only the "abstract" part
 ### 2.4 Exercise:
 In the folder [`/ast/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/ast/CodeExamples)
 there are some interesting programs (well... AST-wise). Using our [AST visualizer](http://goast.yuroyoro.net/)
-from earlier, take each of the program and look at their AST. I added comments explaining the important points.   
+from earlier, take each of the program and look at their AST. I added comments explaining the important points.
+
+You should start with `SimpleForLoop`, move to `BadExpr` and finish with `DifferentSpecsAndDecls`
 
 ### 2.5 Loading a program using the parser
 To load the program, we need to parse it first
