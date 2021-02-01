@@ -175,18 +175,14 @@ and then [`ir/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon20
 
 
 ### 3.6 SSA vs AST
-AST shows us the structure of the code. How different statements in the code relate to each other. SSA, on the other
-hand, shows us how the code flows. That's why constant propagation analyzing values across the function is done on the IR
-level as opposed to the AST. 
+The most important difference is that AST reasons about the the structure of the code, where SSA reasons about the data 
+flows in the code.
 
-When applying this logic to static analysis, we'll see that SSA is used for more complex analysis where we need to
-determine the flow of the data. In contrast, AST will be used for simpler, more structure related analyses.
-
-We can summarize the difference using the following table:
+We can summarize the differences using the following table:
 |                | SSA                                                                                                                                                                                                                                | AST                                                                                                                                                                                             |
 |----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Why to Choose? | - Better when need to handle how data flows through the code. - Does optimizations to the code such as inlining or constant propagation so some functions or variables might be missing - Package types are closer to the language | - Better when when analyzing the code itself, or you don’t want to reason about the control flow graph. - Runs over the source code, so optimizations don’t happen yet.                         |
-| Examples       | - Checking a function for infinite recursion - Checking if all flows after “mutex.Lock” are covered with “mutex.unlock”                                                                                                            | - Passing the correct types to string format - Shifts that equal or exceed the width of the integer - Modifying B.n when benchmarking - Validate the order of imports according to a convention |
+| Why to Choose? | <ul><li>Better when need to handle how data flows through the code.</li><li>Does optimizations to the code such as inlining or constant propagation so some functions or variables might be missing</li><li>Package types are closer to the language </li> | <ul><li> Better when when analyzing the code itself, or you don’t want to reason about the control flow graph.</li> <li>Runs over the source code, so optimizations don’t happen yet.</li>|
+| Examples       | <ul><li>Checking a function for infinite recursion</li><li> Checking if all flows after “mutex.Lock” are covered with “mutex.unlock”</li>| <ul><li>Passing the correct types to string format</li><li>Shifts that equal or exceed the width of the integer</li><li>Modifying B.n when benchmarking</li><li>Validate the order of imports according to a convention</li>|
  
 
 ### 3.7 Writing our analyzer!
