@@ -167,8 +167,9 @@ our `float64` to the `interface{}` type and only then pass it to the function.
 ```
 
 ### 3.5 Exercise
-In the folder `/ir/CodeExamples` there are some interesting programs. Using our SSA visualizer from earlier, take each of 
-the program and look at their SSA. I added comments with notes with explaining the important points. 
+In the folder `ir/CodeExamples` there are some interesting programs. Using our SSA visualizer from earlier, take each of 
+the program and look at their SSA. I added comments with notes with explaining the important points.
+You should start first with `ir/CodeExamples/Map` and then `ir/CodeExamples/Map` 
 
 
 ### 3.6 SSA vs AST
