@@ -167,9 +167,10 @@ our `float64` to the `interface{}` type and only then pass it to the function.
 ```
 
 ### 3.5 Exercise
-In the folder `ir/CodeExamples` there are some interesting programs. Using our SSA visualizer from earlier, take each of 
-the program and look at their SSA. I added comments with notes with explaining the important points.
-You should start first with `ir/CodeExamples/Map` and then `ir/CodeExamples/Map` 
+In the folder [`ir/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/ir/CodeExamples)
+there are some interesting programs. Using our SSA visualizer from earlier, take each of the program and look at their SSA.
+I added comments with notes with explaining the important points. You should start first with [`ir/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/Map/Map.go)
+and then [`ir/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/ElseIf/ElseIf.go) 
 
 
 ### 3.6 SSA vs AST
