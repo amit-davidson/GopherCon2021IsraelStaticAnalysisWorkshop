@@ -46,9 +46,10 @@ BasicBlock represents an SSA basic block. A set of instructions that are execute
  
 <img src="https://i.imgur.com/dBLj172.png" width="50%" height="50%" />
 
-Control Flow Graph (CFG) - In a control-flow graph, each node in the graph represents a basic block. Together, they compose all paths that might be traversed through a program during its execution.
+Control Flow Graph (CFG) - In a control-flow graph, each node in the graph represents a basic block.
+Together, they compose all paths that might be traversed through a program during its execution.
 
-<img src="https://i.imgur.com/K1u4MZ0.png" width="50%" height="50%" />
+<img src="https://i.imgur.com/xjzOCfb.png" width="50%" height="50%" />
 
 #### [Instruction](https://pkg.go.dev/golang.org/x/tools/go/ssa#Instruction)
 a statement that consumes values and performs computation. For example, `Call`, `Return`, `TypeAssert`, etc
@@ -180,6 +181,13 @@ level as opposed to the AST.
 
 When applying this logic to static analysis, we'll see that SSA is used for more complex analysis where we need to
 determine the flow of the data. In contrast, AST will be used for simpler, more structure related analyses.
+
+We can summarize the difference using the following table:
+|                | SSA                                                                                                                                                                                                                                | AST                                                                                                                                                                                             |
+|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Why to Choose? | - Better when need to handle how data flows through the code. - Does optimizations to the code such as inlining or constant propagation so some functions or variables might be missing - Package types are closer to the language | - Better when when analyzing the code itself, or you don’t want to reason about the control flow graph. - Runs over the source code, so optimizations don’t happen yet.                         |
+| Examples       | - Checking a function for infinite recursion - Checking if all flows after “mutex.Lock” are covered with “mutex.unlock”                                                                                                            | - Passing the correct types to string format - Shifts that equal or exceed the width of the integer - Modifying B.n when benchmarking - Validate the order of imports according to a convention |
+ 
 
 ### 3.7 Writing our analyzer!
 In this section we'll implement an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
