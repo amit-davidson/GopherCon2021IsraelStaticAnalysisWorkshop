@@ -1,9 +1,9 @@
 ## 3. Compiler middle end and static analysis with SSA In Go
 ### 3.1 What is IR?
-An **intermediate representation** (**IR**) is the code used internally by a compiler to represent source code. An IR is designed to be conducive for further processing, such as optimization and translation. A "good" IR must be _accurate_ – capable of representing the source code without loss of information  – and _independent_ of any particular source or target language.
+An [**intermediate representation** (**IR**)](https://en.wikipedia.org/wiki/Intermediate_representation) is the code used internally by a compiler to represent source code. An IR is designed to be conducive for further processing, such as optimization and translation. A "good" IR must be _accurate_ – capable of representing the source code without loss of information  – and _independent_ of any particular source or target language.
    
 ### 3.2 What is SSA?
-SSA stands for static single assignment. It's a property of an IR **that requires each variable to be assigned exactly once**, and every variable be defined before it is used. 
+[SSA](https://en.wikipedia.org/wiki/Static_single_assignment_form) stands for static single assignment. It's a property of an IR **that requires each variable to be assigned exactly once**, and every variable be defined before it is used. 
 The primary usefulness of SSA comes from how it simplifies the properties of variables and improves compilers optimizations.
 
 For example, consider this piece of code:
@@ -23,7 +23,7 @@ Humans can see that the first assignment is unnecessary and that the value of `y
 second assignment of `y`. In SSA form, both of these are immediate
 
 ### 3.3 SSA package members
-The package `tools/go/ssa` defines the representation of elements of Go programs in SSA format.
+The package [`tools/go/ssa`](https://pkg.go.dev/golang.org/x/tools/go/ssa) defines the representation of elements of Go programs in SSA format.
 The key types form a hierarchical structure.
 
 #### [Program](https://pkg.go.dev/golang.org/x/tools/go/ssa#Program) 
@@ -68,7 +68,7 @@ And when combined:
 The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primitives like `MakeChan` and `Alloc`. 
 
 ### 3.4 Viewing SSA
-We can `ssadump` to view the SSA form of programs.
+We can [`ssadump`](https://pkg.go.dev/golang.org/x/tools/cmd/ssadump) to view the SSA form of programs.
 ```bash
 go get -u golang.org/x/tools/cmd/ssadump
 ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/Channel/
@@ -168,10 +168,10 @@ our `float64` to the `interface{}` type and only then pass it to the function.
 ```
 
 ### 3.5 Exercise
-In the folder [`CompilerMiddleEndSSAInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/ir/CodeExamples)
+In the folder [`CompilerMiddleEndSSAInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/CompilerMiddleEndSSAInGo/CodeExamples)
 there are some interesting programs. Using our SSA visualizer from earlier, take each of the program and look at their SSA.
-I added comments with notes with explaining the important points. You should start first with [`CompilerMiddleEndSSAInGo/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/Map/Map.go)
-and then [`CompilerMiddleEndSSAInGo/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/ElseIf/ElseIf.go) 
+I added comments with notes with explaining the important points. You should start first with [`CompilerMiddleEndSSAInGo/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/CodeExamples/Map/Map.go)
+and then [`CompilerMiddleEndSSAInGo/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/CompilerMiddleEndSSAInGo/CodeExamples/ElseIf) 
 
 
 ### 3.6 SSA vs AST
