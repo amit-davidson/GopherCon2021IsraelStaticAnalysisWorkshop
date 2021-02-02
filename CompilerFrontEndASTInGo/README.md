@@ -178,11 +178,11 @@ and for each we'll pass it to the `ast.Inspect` function for iteration.
 It's worth mentioning again that `ast` package contains only the "abstract" parts so it ignores parentheses, colon, etc...
 
 ### 2.4 Exercise:
-In the folder [`CompilerFrontEndASTInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/ast/CodeExamples)
+In the folder [`CompilerFrontEndASTInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/CompilerFrontEndASTInGo/CodeExamples)
 there are some interesting programs (well... AST-wise). Using our [AST visualizer](http://goast.yuroyoro.net/)
 from earlier, take each of the program and look at their AST. I added comments explaining the important points.
 
-You should start with [`SimpleForLoop`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/SimpleForLoop.gohttps://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/SimpleForLoop.go),
+You should start with [`SimpleForLoop`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/SimpleForLoop.go),
 move to [`BadExpr`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/BadExpr.txt)
 and finish with [`DifferentSpecsAndDecls`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/DifferentSpecsAndDecls.go)
 

@@ -24,6 +24,11 @@ Install [Go tools](https://github.com/golang/tools):
 go get -u golang.org/x/tools/...
 ```
 
+Validate the installation by running
+```bash
+ssadump -h
+```
+and making sure you get a help message that starts with: `Usage of ssadump:`
 
 ### Contents:
 1. [Introduction to compilers and program analysis](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/Intro)
