@@ -50,6 +50,12 @@ The front end transforms the input program into an intermediate representation (
 
 <img src="https://i.imgur.com/B7ynZWe.png" height="80%" width="80%"/>
 
+### What is IR?
+An [**intermediate representation** (**IR**)](https://en.wikipedia.org/wiki/Intermediate_representation) is the code
+used internally by a compiler to represent source code. An IR is designed to be conducive for further processing,
+such as optimization and translation. A "good" IR must be _accurate_ – capable of representing the source code without
+loss of information  – and _independent_ of any particular source or target language.
+
 ### 1.2.2 Frontend
 Most commonly today, the frontend is broken into three phases: lexical analysis (also known as tokenizing or scanning),
 syntax analysis (also known as scanning or parsing), and semantic analysis.
