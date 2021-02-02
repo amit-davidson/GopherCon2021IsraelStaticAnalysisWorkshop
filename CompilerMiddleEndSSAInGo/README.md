@@ -22,15 +22,7 @@ x1 := y2
 Humans can see that the first assignment is unnecessary and that the value of `y`  used in the third line comes from the
 second assignment of `y`. In SSA form, both of these are immediate
 
-### 3.3 Why do we need SSA if we already know AST?
-SSA is more concerned with how the data flows through the code (conditions, function calls, etc...).
-For example, making sure that after `mutex.Lock` is called, there’s a call to `mutex.Unlock` in all possible branches. 
-
-AST is more concerned with the structure of the code. For example, making sure imports are ordered.
-
-We'll go again later over this point, when we know what SSA is, so the difference will be clearer.
-
-### 3.4 SSA package members
+### 3.3 SSA package members
 The package `tools/go/ssa` defines the representation of elements of Go programs in SSA format.
 The key types form a hierarchical structure.
 
@@ -75,7 +67,7 @@ And when combined:
 
 The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primitives like `MakeChan` and `Alloc`. 
 
-### 3.5 Viewing SSA
+### 3.4 Viewing SSA
 We can `ssadump` to view the SSA form of programs.
 ```bash
 go get -u golang.org/x/tools/cmd/ssadump
@@ -175,16 +167,17 @@ our `float64` to the `interface{}` type and only then pass it to the function.
         return
 ```
 
-### 3.6 Exercise
+### 3.5 Exercise
 In the folder [`CompilerMiddleEndSSAInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/ir/CodeExamples)
 there are some interesting programs. Using our SSA visualizer from earlier, take each of the program and look at their SSA.
 I added comments with notes with explaining the important points. You should start first with [`CompilerMiddleEndSSAInGo/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/Map/Map.go)
 and then [`CompilerMiddleEndSSAInGo/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/ir/CodeExamples/ElseIf/ElseIf.go) 
 
 
-### 3.7 SSA vs AST
+### 3.6 SSA vs AST
 The most important difference is that AST reasons about the structure of the code, where SSA reasons about how data 
-flows in the code.
+flows in the code. Why do need both? Each "level" suits for a different problem. You can think of it as satellite vs
+terrain modes on maps. They both represent the same source map, but each mode solves a different problem. 
 
 We can summarize the differences using the following table:
 |                | SSA                                                                                                                                                                                                                                | AST                                                                                                                                                                                             |
@@ -193,11 +186,11 @@ We can summarize the differences using the following table:
 | Examples       | <ul><li>Checking a function for infinite recursion</li><li> Checking if all flows after “mutex.Lock” are covered with “mutex.unlock”</li>| <ul><li>Passing the correct types to string format</li><li>Shifts that equal or exceed the width of the integer</li><li>Modifying B.n when benchmarking</li><li>Validate the order of imports according to a convention</li>|
  
 
-### 3.8 Writing our analyzer!
+### 3.7 Writing our analyzer!
 In this section we'll implement an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
 https://github.com/ipfs/go-ipfs/issues/2043
 
-### 3.9 Congratulations
+### 3.8 Congratulations
 You have a good understanding of what IR and SSA are, the SSA package used to create static code analyzers that 
 use it and how to write such analyzers.  
 
