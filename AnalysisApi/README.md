@@ -1,6 +1,6 @@
 ## 4 Analysis API:
 ### 4.1 tools/go/analysis
-The package defines an API for modular static analysis tools. In other words, it's a common interface for all static 
+The package defines an [API](https://pkg.go.dev/golang.org/x/tools/go/analysis) for modular static analysis tools. In other words, it's a common interface for all static 
 code analyzers.
 
 Why should you care? What's the difference between using the analysis API, and the way we wrote so far?
@@ -14,7 +14,8 @@ Also, it enforces a single pattern for all the static analysis tools such as how
 warnings are reported
     
 ### 4.2 analysis members  
-The primary type in the API is `analysis.Analyzer`.  It describes an analysis function: its name, documentation, flags, relationship to other analyzers, and of course, it's logic.
+The primary type in the API is [`analysis.Analyzer`](https://pkg.go.dev/golang.org/x/tools/go/analysis#hdr-Analyzer).
+It describes an analysis function: its name, documentation, flags, relationship to other analyzers, and of course, it's logic.
 
 ``` go
 type Analyzer struct {
@@ -39,7 +40,8 @@ results it may access, and it constrains the order in which a driver may run ana
 
 
 The most important one is the `Run` function. It contains the logic that should is executed upon a single package. 
-It takes as an argument `*analysis.Pass` and returns a value to be used by other analyzers and an error.
+It takes as an argument [`*analysis.Pass`](https://pkg.go.dev/golang.org/x/tools/go/analysis#hdr-Pass) and returns a 
+value to be used by other analyzers and an error.
 
 ``` go
 type Pass struct {
@@ -55,7 +57,7 @@ type Pass struct {
 
 A `Pass` describes a single unit of work: the application of a particular `Analyzer` to a particular package of Go code. The `Pass` provides information to the Analyzer's `Run` function about the analyzed package and provides operations to the `Run` function for reporting diagnostics and other information back to the driver. It also provides `Fset`, `Files`, `Pkg`, and `TypesInfo` that we know from earlier, so we don't have to take care of ourselves.
 
-The `Report` function emits a diagnostic, a message associated with a source position. For most analyses, diagnostics are their primary result. For convenience, `Pass` provides a helper method, `Reportf`, to report a new diagnostic by formatting a string. Diagnostic is defined as:
+The [`Report`](https://pkg.go.dev/golang.org/x/tools/go/analysis#Pass.Reportf) function emits a diagnostic, a message associated with a source position. For most analyses, diagnostics are their primary result. For convenience, `Pass` provides a helper method, `Reportf`, to report a new diagnostic by formatting a string. Diagnostic is defined as:
 
 ``` go
 type Diagnostic struct {
@@ -129,7 +131,8 @@ func main() {
 ```
 
 ### 4.6 Implementing a code analyzer using the analysis api.   
-In this section, we'll convert our `ArgsOverwrite` Analyzer from earlier to the analysis API
+In this section, we'll convert our [`ArgsOverwrite`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/result/ArgsOverwriteAnalyzer.gohttps://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/result/ArgsOverwriteAnalyzer.go)
+Analyzer from earlier to the analysis API
 
 ### 4.7 Congratulations
 You have a good understanding of what the analysis API is and how to use it help us in writing analyses in the future.
