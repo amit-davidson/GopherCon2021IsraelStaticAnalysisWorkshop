@@ -21,8 +21,8 @@ go get -u golang.org/x/tools/...
 
 
 ### Contents:
-1. [Introduction to compilers and program analysis](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/intro/README.md)
-2. [Compiler front end and static analysis with AST In Go](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/README.md)
-3. [Compiler middle end and static analysis with SSA In Go](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/README.md)
-3. [The analysis API](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/analysisApi/READ.md)
-3. [Conclusion](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/conclusion/README.md)
+1. [Introduction to compilers and program analysis](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/Intro)
+2. [Compiler front end and static analysis with AST In Go](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo)
+3. [Compiler middle end and static analysis with SSA In Go](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo)
+3. [The analysis API](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/analysisApi)
+3. [Conclusion](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/conclusion)
