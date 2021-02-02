@@ -1,5 +1,5 @@
 ## 4 Analysis API:
-### 4.1 tools/go/analysis
+### 4.1 (tools/go/analysis]((https://pkg.go.dev/golang.org/x/tools/go/analysis))
 The package defines an [API](https://pkg.go.dev/golang.org/x/tools/go/analysis) for modular static analysis tools. In other words, it's a common interface for all static 
 code analyzers.
 
@@ -13,7 +13,7 @@ The analysis API makes writing analyses easier by taking care of:
 Also, it enforces a single pattern for all the static analysis tools such as how analysis are structured and how 
 warnings are reported
     
-### 4.2 analysis members  
+### 4.2 Analysis API members  
 The primary type in the API is [`analysis.Analyzer`](https://pkg.go.dev/golang.org/x/tools/go/analysis#hdr-Analyzer).
 It describes an analysis function: its name, documentation, flags, relationship to other analyzers, and of course, it's logic.
 
@@ -67,7 +67,7 @@ type Diagnostic struct {
 }
 ```
 
-### 4.3 How to use it
+### 4.3 Project structure
 First let's define the project structure:
 ```
 │── README.md
@@ -130,7 +130,7 @@ func main() {
 }
 ```
 
-### 4.6 Implementing a code analyzer using the analysis api.   
+### 4.6 Overviewing an analyzer!   
 In this section, we'll convert our [`ArgsOverwrite`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/result/ArgsOverwriteAnalyzer.gohttps://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/result/ArgsOverwriteAnalyzer.go)
 Analyzer from earlier to the analysis API
 

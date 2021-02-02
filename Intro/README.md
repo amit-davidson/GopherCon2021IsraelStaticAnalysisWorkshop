@@ -42,7 +42,7 @@ Compilers are divided into three stages - front end, middle end, and the back en
 - Front end - The front end scans the input and verifies syntax and semantics according to a specific source language.
 For example, it makes sure the code contains only familiar characters; it validates that an if statement has a condition
 and is not wrapped with parentheses. It also does type checking to make sure the correct types are passed accordingly around the program.
-The front end transforms the input program into an intermediate representation (IR) for further processing by the middle end.
+The front end transforms the input program into an [intermediate representation (IR)]((https://en.wikipedia.org/wiki/Intermediate_representation)) for further processing by the middle end.
 
 - Middle end - The middle end performs optimizations on the intermediate representation to improve the performance and the quality of the produced machine code. Popular optimizations include: [dead code elimination](https://en.wikipedia.org/wiki/Dead_code_elimination), [constant propagation](https://en.wikipedia.org/wiki/Constant_folding) and [inlining](https://en.wikipedia.org/wiki/Inline_expansion). 
 

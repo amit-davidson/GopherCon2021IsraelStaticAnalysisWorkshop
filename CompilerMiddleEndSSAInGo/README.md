@@ -183,8 +183,8 @@ We can summarize the differences using the following table:
 | Examples       | <ul><li>Checking a function for infinite recursion</li><li> Checking if all flows after “mutex.Lock” are covered with “mutex.unlock”</li>| <ul><li>Passing the correct types to string format</li><li>Shifts that equal or exceed the width of the integer</li><li>Modifying B.n when benchmarking</li><li>Validate the order of imports according to a convention</li>|
  
 
-### 3.6 Writing our analyzer!
-In this section we'll implement an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
+### 3.6 Overviewing an analyzer!
+In this section we'll look over an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
 https://github.com/ipfs/go-ipfs/issues/2043
 
 ### 3.7 Congratulations
