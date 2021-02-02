@@ -14,7 +14,12 @@ about 2 different representations of the code (AST and SSA), and write an analyz
 You will also learn about the analysis API making writing analyzers easier and then we'll finish with a discussion.
 
 ### Requirements:
-[Go tools](https://github.com/golang/tools):
+Install the repo:
+```bash
+go get -u github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop
+```
+
+Install [Go tools](https://github.com/golang/tools):
 ```bash
 go get -u golang.org/x/tools/...
 ```
