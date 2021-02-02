@@ -182,7 +182,9 @@ In the folder [`CompilerFrontEndASTInGo/CodeExamples`](https://github.com/amit-d
 there are some interesting programs (well... AST-wise). Using our [AST visualizer](http://goast.yuroyoro.net/)
 from earlier, take each of the program and look at their AST. I added comments explaining the important points.
 
-You should start with `SimpleForLoop`, move to `BadExpr` and finish with `DifferentSpecsAndDecls`
+You should start with [`SimpleForLoop`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/SimpleForLoop.gohttps://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/SimpleForLoop.go),
+move to [`BadExpr`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/BadExpr.txt)
+and finish with [`DifferentSpecsAndDecls`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerFrontEndASTInGo/CodeExamples/DifferentSpecsAndDecls.go)
 
 ### 2.5 Loading a program using the parser
 To load the program, we need to parse it first
