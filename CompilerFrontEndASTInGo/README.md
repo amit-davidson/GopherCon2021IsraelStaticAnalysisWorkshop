@@ -249,7 +249,7 @@ f, err := parser.ParseFile(fset, "", src, 0)
     return  
 }  
 ```
-> Tip: Instead of iterating file by file, you can load an entire directory using `parser.ParseDir`
+> Tip: Instead of iterating file by file, you can load an entire directory using [`parser.ParseDir`](https://golang.org/pkg/go/parser/#ParseDir)
 
 Finally, we define a visitor function that will be called with each node inside the AST. We pass our function to
 [`ast.Inspect`](https://golang.org/pkg/go/ast/#Inspect) to iterate over all the nodes in depth-first order and print a message when we reach the
