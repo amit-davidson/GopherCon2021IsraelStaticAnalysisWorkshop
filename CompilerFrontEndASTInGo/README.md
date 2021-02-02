@@ -115,9 +115,9 @@ We can use this [AST visualizer](http://goast.yuroyoro.net/) to view it's AST.
     83  }
 ```
 
-Let's focus on the JSON under `*ast.File` representing a Go source file. The file is the root node, and it contains all
+Let's focus on the JSON under [`*ast.File`](https://golang.org/pkg/go/ast/#File) representing a Go source file. The file is the root node, and it contains all
 the top-level declarations in the file - the import and the main function. Under `mains'` body, we have a
-`blockStmt` containing a list of the function statements. Similar to HTML, the dependency of the nodes create a
+[`*ast.blockStmt`](https://golang.org/pkg/go/ast/#BlockStmt) containing a list of the function statements. Similar to HTML, the dependency of the nodes create a
 tree-like structure. 
 
 The syntax is "abstract" in the sense that it does not represent every detail appearing in the real syntax, but rather
@@ -252,7 +252,7 @@ f, err := parser.ParseFile(fset, "", src, 0)
 > Tip: Instead of iterating file by file, you can load an entire directory using `parser.ParseDir`
 
 Finally, we define a visitor function that will be called with each node inside the AST. We pass our function to
-(`ast.Inspect`)[https://golang.org/pkg/go/ast/#Inspect] to iterate over all the nodes in depth-first order and print a message when we reach the
+[`ast.Inspect`](https://golang.org/pkg/go/ast/#Inspect) to iterate over all the nodes in depth-first order and print a message when we reach the
 `Hello World` string literal with it's position in the code. We return `true` each iteration to keep traversing the tree until we found the desired 
 node. Then, we print our message and return false to indicate we're done searching and to exit the traverse function.
 
