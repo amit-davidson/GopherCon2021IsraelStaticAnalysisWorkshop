@@ -228,7 +228,7 @@ func main() {
 ```
 
 
-We first create a `fileSet`, representing a set of source files. `FileSet` has the properties `files` and `base`
+We first create a [`fileSet`](https://golang.org/pkg/go/token/#FileSet), representing a set of source files. `FileSet` has the properties `files` and `base`
 recording the used files and all the files' total size. Using the size property of `token.File`, we can easily determine
 in which file a statement is, given its position.
 
@@ -238,7 +238,7 @@ fset := token.NewFileSet()
 
 <img src="https://i.imgur.com/AQfkL3E.png" height="50%" width="50%"/>
 
-Then, we call the `parser.ParseFile` function, providing it our `fileSet` to populate it, an empty path, a string as the
+Then, we call the [`parser.ParseFile`](https://golang.org/pkg/go/parser/#ParseFile) function, providing it our `fileSet` to populate it, an empty path, a string as the
 source so the parser will use it instead of loading from a file, and a build mode - 0. In this example, we used 0 to 
 fully load the program, but any other [mode](https://golang.org/pkg/go/parser/#Mode) can be used.
 
@@ -252,7 +252,7 @@ f, err := parser.ParseFile(fset, "", src, 0)
 > Tip: Instead of iterating file by file, you can load an entire directory using `parser.ParseDir`
 
 Finally, we define a visitor function that will be called with each node inside the AST. We pass our function to
-`ast.Inspect` to iterate over all the nodes in depth-first order and print a message when we reach the
+(`ast.Inspect`)[https://golang.org/pkg/go/ast/#Inspect] to iterate over all the nodes in depth-first order and print a message when we reach the
 `Hello World` string literal with it's position in the code. We return `true` each iteration to keep traversing the tree until we found the desired 
 node. Then, we print our message and return false to indicate we're done searching and to exit the traverse function.
 
