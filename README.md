@@ -16,7 +16,7 @@ You will also learn about the analysis API making writing analyzers easier and t
 ### Requirements:
 Install the repo:
 ```bash
-go get -u github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop
+git clone https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop.git
 ```
 
 Install [Go tools](https://github.com/golang/tools):
