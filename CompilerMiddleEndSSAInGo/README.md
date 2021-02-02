@@ -171,7 +171,7 @@ our `float64` to the `interface{}` type and only then pass it to the function.
 In the folder [`CompilerMiddleEndSSAInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/CompilerMiddleEndSSAInGo/CodeExamples)
 there are some interesting programs. Using our SSA visualizer from earlier, take each of the program and look at their SSA.
 I added comments with notes with explaining the important points. You should start first with [`CompilerMiddleEndSSAInGo/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/CodeExamples/Map/Map.go)
-and then [`CompilerMiddleEndSSAInGo/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/CompilerMiddleEndSSAInGo/CodeExamples/ElseIf) 
+and then [`CompilerMiddleEndSSAInGo/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/CodeExamples/ElseIf/ElseIf.go) 
 
 
 ### 3.6 SSA vs AST
