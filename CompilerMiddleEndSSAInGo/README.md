@@ -66,12 +66,6 @@ The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#
 
 ### 3.3 Viewing SSA
 We can [`ssadump`](https://pkg.go.dev/golang.org/x/tools/cmd/ssadump) to view the SSA form of programs.
-```bash
-go get -u golang.org/x/tools/cmd/ssadump
-ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/Map/
-ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/ElseIf/
-```
-We use the `F` to print the SSA code, and `I` to ignore `init` function.
 > You can also use this [SSA visualizer](http://golang-ssaview.herokuapp.com/) in view SSA in your CLI. For this example,
 > I chose not to, since it it uses a different [build mode](https://pkg.go.dev/golang.org/x/tools/go/ssa#BuilderMode) then 
 > the one we need.
@@ -166,9 +160,16 @@ our `float64` to the `interface{}` type and only then pass it to the function.
 
 ### 3.4 Exercise
 In the folder [`CompilerMiddleEndSSAInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/CompilerMiddleEndSSAInGo/CodeExamples)
-there are some interesting programs. Using our SSA visualizer from earlier, take each of the program and look at their SSA.
+there are some interesting programs. Using our [`ssadump`](https://pkg.go.dev/golang.org/x/tools/cmd/ssadump) from earlier, take each of the program and look at their SSA.
 I added comments with notes with explaining the important points. You should start first with [`CompilerMiddleEndSSAInGo/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/CodeExamples/Map/Map.go)
 and then [`CompilerMiddleEndSSAInGo/CodeExamples/ElseIf`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/CodeExamples/ElseIf/ElseIf.go) 
+
+```bash
+go get -u golang.org/x/tools/cmd/ssadump
+ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/Map/
+ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/ElseIf/
+```
+We use the `F` to print the SSA code, and `I` to ignore `init` function.
 
 
 ### 3.5 SSA vs AST
