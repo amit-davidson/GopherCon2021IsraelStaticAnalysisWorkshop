@@ -68,7 +68,7 @@ The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#
 We can [`ssadump`](https://pkg.go.dev/golang.org/x/tools/cmd/ssadump) to view the SSA form of programs.
 ```bash
 go get -u golang.org/x/tools/cmd/ssadump
-ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/Channel/
+ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/Map/
 ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/ElseIf/
 ```
 We use the `F` to print the SSA code, and `I` to ignore `init` function.
