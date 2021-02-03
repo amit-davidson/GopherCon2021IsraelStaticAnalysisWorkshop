@@ -22,5 +22,6 @@ func main() {
 // successors. Notice that the first block can only jump to 1 (a=3) or 3 (a==0) and 3 evaluates the condition again and can go to
 // 4 (a=4) or 5(a=5)
 
-// 2. Also, because the compiler can't "proof" that a is not used else where hence considered dead (since it's global) it
-//	  does not optimize it away
+// 2. `a` is declared in the global scope (and not under the function scope). Because it's in the global scope, it might
+// be used in other places, so the compiler isn't sure if it could have side effects, (not considered dead) so it can't
+// optimize away it using dead code elimination.

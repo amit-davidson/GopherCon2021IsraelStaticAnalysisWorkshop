@@ -55,9 +55,14 @@ func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
 	visitor := func(node ast.Node) bool {
 		var typ *ast.FuncType
 		var body *ast.BlockStmt
-		// -----------------------------------------------------------------
-		// 1. Filter for function nodes, and assign typ and body accordingly
-		// -----------------------------------------------------------------
+		switch fn := node.(type) {
+		case *ast.FuncDecl: // Regular function
+			typ = fn.Type
+			body = fn.Body
+		case *ast.FuncLit: // Anonymous function
+			typ = fn.Type
+			body = fn.Body
+		}
 		if typ == nil || body == nil { // Exclude other types but also external functions with missing body
 			return true
 		}
@@ -73,8 +78,8 @@ func analyzePackage(p *ast.Package, fset *token.FileSet) []string {
 					case *ast.AssignStmt:
 						var ident *ast.Ident
 						// -------------------------------------------------------------------------
-						// 2. info.ObjectOf requires *ast.ident. How can I extract *ast.ident from the  *ast.AssignStmt.Lhs?
-						// The flow should be similar to *ast.Ident is taken in the *ast.IncDecStmt case and passed to info.ObjectOf
+						// info.ObjectOf requires *ast.ident. How can I extract *ast.ident from *ast.AssignStmt.Lhs?
+						// The flow should be similar to how *ast.Ident is taken in the *ast.IncDecStmt case
 						// -------------------------------------------------------------------------
 						if info.ObjectOf(ident) == obj {
 							outputs = append(outputs, output(ident, fset.Position(ident.Pos())))

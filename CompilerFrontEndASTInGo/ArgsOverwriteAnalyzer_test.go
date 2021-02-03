@@ -24,6 +24,7 @@ func Test_analyzePackage(t *testing.T) {
 		{name: "EmptyBodyFunction", result: []string{}},
 		{name: "NoWarnings", result: []string{}},
 		{name: "DecrementOperator", result: []string{"\"retries\" overwrites func parameter"}},
+		{name: "LhsMultipleValues", result: []string{"\"a\" overwrites func parameter", "\"b\" overwrites func parameter"}},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
