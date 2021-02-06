@@ -19,7 +19,7 @@ x1 := y2
 Humans can see that the first assignment is unnecessary and that the value of `y`  used in the third line comes from the
 second assignment of `y`. In SSA form, both of these are immediate
 
-### 3.2 SSA package members
+### 3.2 go/ssa package members
 The package [`tools/go/ssa`](https://pkg.go.dev/golang.org/x/tools/go/ssa) defines the representation of elements of Go programs in SSA format.
 The key types form a hierarchical structure.
 
@@ -64,7 +64,34 @@ And when combined:
 
 The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primitives like `MakeChan` and `Alloc`. 
 
-### 3.3 Viewing SSA
+### 3.3 SSA vs AST
+The most important difference is that AST reasons about the structure of the code, where SSA reasons about how data 
+flows in the code. Why do need both? Each "level" suits for a different problem. You can think of it as satellite vs
+terrain modes on maps. They both represent the same source map, but each mode solves a different problem. 
+
+We can summarize the differences using the following table:
+|                | SSA                                                                                                                                                                                                                                | AST                                                                                                                                                                                             |
+|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Why to Choose? | <ul><li>Better when need to handle how data flows through the code.</li><li>Does optimizations to the code such as inlining or constant propagation so some functions or variables might be missing</li><li>Package types are closer to the language </li> | <ul><li> Better when when analyzing the code itself, or you don’t want to reason about the control flow graph.</li> <li>Runs over the source code, so optimizations don’t happen yet.</li>|
+| Examples       | <ul><li>Checking a function for infinite recursion</li><li> Checking if all flows after “mutex.Lock” are covered with “mutex.unlock”</li>| <ul><li>Passing the correct types to string format</li><li>Shifts that equal or exceed the width of the integer</li><li>Modifying B.n when benchmarking</li><li>Validate the order of imports according to a convention</li>|
+ 
+
+### 3.4 Overviewing an analyzer!
+In this section we'll look over an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
+https://github.com/ipfs/go-ipfs/issues/2043
+
+### 3.5 Congratulations
+You have a good understanding of what IR and SSA are, the SSA package used to create static code analyzers that 
+use it and how to write such analyzers.  
+
+In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/AnalysisApi)
+we'll focus on the analysis API. A package used define a common API for all code analyzers and to make writing analyses easier. 
+It also provides us an infrastructure that helps us with all the non-logic code such as loading, testing and running our
+analysis. 
+
+### Extra:
+
+### 3.6 Viewing SSA
 We can [`ssadump`](https://pkg.go.dev/golang.org/x/tools/cmd/ssadump) to view the SSA form of programs.
 > You can also use this [SSA visualizer](http://golang-ssaview.herokuapp.com/) in view SSA in your CLI. For this example,
 > I chose not to, since it it uses a different [build mode](https://pkg.go.dev/golang.org/x/tools/go/ssa#BuilderMode) then 
@@ -158,7 +185,7 @@ our `float64` to the `interface{}` type and only then pass it to the function.
         return
 ```
 
-### 3.4 Exercise
+### 3.7 Exercise
 In the folder [`CompilerMiddleEndSSAInGo/CodeExamples`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/CompilerMiddleEndSSAInGo/CodeExamples)
 there are some interesting programs. Using our [`ssadump`](https://pkg.go.dev/golang.org/x/tools/cmd/ssadump) from earlier, take each of the program and look at their SSA.
 I added comments with notes with explaining the important points. You should start first with [`CompilerMiddleEndSSAInGo/CodeExamples/Map`](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/blob/master/CompilerMiddleEndSSAInGo/CodeExamples/Map/Map.go)
@@ -172,27 +199,3 @@ ssadump -build=FI ./CompilerMiddleEndSSAInGo/CodeExamples/ElseIf/
 We use the `F` to print the SSA code, and `I` to ignore `init` function.
 
 
-### 3.5 SSA vs AST
-The most important difference is that AST reasons about the structure of the code, where SSA reasons about how data 
-flows in the code. Why do need both? Each "level" suits for a different problem. You can think of it as satellite vs
-terrain modes on maps. They both represent the same source map, but each mode solves a different problem. 
-
-We can summarize the differences using the following table:
-|                | SSA                                                                                                                                                                                                                                | AST                                                                                                                                                                                             |
-|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Why to Choose? | <ul><li>Better when need to handle how data flows through the code.</li><li>Does optimizations to the code such as inlining or constant propagation so some functions or variables might be missing</li><li>Package types are closer to the language </li> | <ul><li> Better when when analyzing the code itself, or you don’t want to reason about the control flow graph.</li> <li>Runs over the source code, so optimizations don’t happen yet.</li>|
-| Examples       | <ul><li>Checking a function for infinite recursion</li><li> Checking if all flows after “mutex.Lock” are covered with “mutex.unlock”</li>| <ul><li>Passing the correct types to string format</li><li>Shifts that equal or exceed the width of the integer</li><li>Modifying B.n when benchmarking</li><li>Validate the order of imports according to a convention</li>|
- 
-
-### 3.6 Overviewing an analyzer!
-In this section we'll look over an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
-https://github.com/ipfs/go-ipfs/issues/2043
-
-### 3.7 Congratulations
-You have a good understanding of what IR and SSA are, the SSA package used to create static code analyzers that 
-use it and how to write such analyzers.  
-
-In the [next section](https://github.com/amit-davidson/GopherCon2021IsraelStaticAnalysisWorkshop/tree/master/AnalysisApi)
-we'll focus on the analysis API. A package used define a common API for all code analyzers and to make writing analyses easier. 
-It also provides us an infrastructure that helps us with all the non-logic code such as loading, testing and running our
-analysis. 

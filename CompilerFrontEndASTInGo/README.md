@@ -15,7 +15,7 @@ the parser runs type-checking algorithms run over the tree, validates its correc
 
 <img src="https://i.imgur.com/hVPefPe.png" height="50%" width="50%"/>
 
-### 2.2 What is AST?
+### 2.2 AST in Go
 An abstract syntax tree (AST) is a way of representing the syntax of a programming language as a hierarchical tree-like structure. Let's take a look at the following program for an explanation.
 
 ``` go
@@ -124,7 +124,7 @@ The syntax is "abstract" in the sense that it does not represent every detail ap
 just the structural or content-related details. For instance, grouping parentheses are implicit in the tree structure,
 so these are not represented as separate nodes.
 
-### 2.3 AST package members
+### 2.3 go/ast Package members
 The AST package contains the types used to represent syntax trees in Go. We can divide the members into three categories:
 Interfaces, concrete types, and others.
 
@@ -236,7 +236,7 @@ in which file a statement is, given its position.
 fset := token.NewFileSet()  
 ```
 
-<img src="https://i.imgur.com/AQfkL3E.png" height="50%" width="50%"/>
+<img src="https://i.imgur.com/ZoDH4Td.png" height="50%" width="50%"/>
 
 Then, we call the [`parser.ParseFile`](https://golang.org/pkg/go/parser/#ParseFile) function, providing it our `fileSet` to populate it, an empty path, a string as the
 source so the parser will use it instead of loading from a file, and a build mode - 0. In this example, we used 0 to 
