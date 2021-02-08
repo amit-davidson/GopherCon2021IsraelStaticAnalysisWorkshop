@@ -63,8 +63,13 @@ And when combined:
 <img src="https://i.imgur.com/W02MErA.png" width="70%" height="70%" />
 
 The package contains other [types](https://pkg.go.dev/golang.org/x/tools/go/ssa#pkg-overview) - Include language keywords such as `Defer`, `If` but also lower level primitives like `MakeChan` and `Alloc`. 
+ 
 
-### 3.3 SSA vs AST
+### 3.3 Overviewing an analyzer!
+In this section we'll look over an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
+https://github.com/ipfs/go-ipfs/issues/2043
+
+### 3.4 SSA vs AST
 The most important difference is that AST reasons about the structure of the code, where SSA reasons about how data 
 flows in the code. Why do need both? Each "level" suits for a different problem. You can think of it as satellite vs
 terrain modes on maps. They both represent the same source map, but each mode solves a different problem. 
@@ -74,11 +79,6 @@ We can summarize the differences using the following table:
 |----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Why to Choose? | <ul><li>Better when need to handle how data flows through the code.</li><li>Does optimizations to the code such as inlining or constant propagation so some functions or variables might be missing</li><li>Package types are closer to the language </li> | <ul><li> Better when when analyzing the code itself, or you don’t want to reason about the control flow graph.</li> <li>Runs over the source code, so optimizations don’t happen yet.</li>|
 | Examples       | <ul><li>Checking a function for infinite recursion</li><li> Checking if all flows after “mutex.Lock” are covered with “mutex.unlock”</li>| <ul><li>Passing the correct types to string format</li><li>Shifts that equal or exceed the width of the integer</li><li>Modifying B.n when benchmarking</li><li>Validate the order of imports according to a convention</li>|
- 
-
-### 3.4 Overviewing an analyzer!
-In this section we'll look over an analyzer that warns when `t.Fatal` is used inside a goroutine as described here:
-https://github.com/ipfs/go-ipfs/issues/2043
 
 ### 3.5 Congratulations
 You have a good understanding of what IR and SSA are, the SSA package used to create static code analyzers that 
