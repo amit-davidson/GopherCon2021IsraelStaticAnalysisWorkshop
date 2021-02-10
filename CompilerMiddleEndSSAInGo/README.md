@@ -94,7 +94,7 @@ analysis.
 ### 3.6 Viewing SSA
 We can [`ssadump`](https://pkg.go.dev/golang.org/x/tools/cmd/ssadump) to view the SSA form of programs.
 > You can also use this [SSA visualizer](http://golang-ssaview.herokuapp.com/) in view SSA in your CLI. For this example,
-> I chose not to, since it it uses a different [build mode](https://pkg.go.dev/golang.org/x/tools/go/ssa#BuilderMode) then 
+> I chose not to, since it uses a different [build mode](https://pkg.go.dev/golang.org/x/tools/go/ssa#BuilderMode) than 
 > the one we need.
 
 Let's consider this program:
