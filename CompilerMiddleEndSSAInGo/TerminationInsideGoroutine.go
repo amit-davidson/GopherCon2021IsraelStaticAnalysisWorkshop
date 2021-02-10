@@ -68,7 +68,7 @@ func checkTerminationInsideGoroutine(fn *ssa.Function, fset *token.FileSet) stri
 					if types.TypeString(recv.Type(), nil) != "*testing.common" {
 						continue
 					}
-					terminateFn, ok := call.Call.StaticCallee().Object().(*types.Func)
+					terminateFn, ok := callee.Object().(*types.Func)
 					if !ok {
 						continue
 					}
