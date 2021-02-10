@@ -25,11 +25,9 @@ func main() {
 	}
 	funcs := getAllFunctions(pkg)
 	for _, fn := range funcs {
-		outputs := checkTerminationInsideGoroutine(fn, prog.Fset)
-		for _, output := range outputs {
-			fmt.Println(output)
+		output := checkTerminationInsideGoroutine(fn, prog.Fset)
+		fmt.Println(output)
 		}
-	}
 
 }
 
